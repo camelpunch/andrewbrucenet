@@ -11,6 +11,11 @@
   (testing "404s with bogus path"
     (is (= 404 (:status (app (request :get "/non-existent")))))))
 
+(deftest cv-html
+  (testing "has link to Word format"
+    (is (re-find #"<a href=\"/cv.doc\">"
+                 (:body (app (request :get "/cv")))))))
+
 (deftest redirect-to-www
   (testing "preserves path"
     (is (= "http://www.andrewbruce.net/someplace"
