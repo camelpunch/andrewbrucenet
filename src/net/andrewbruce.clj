@@ -2,10 +2,16 @@
   (:require [ring.adapter.jetty :as jetty])
   (:gen-class))
 
-(defn app [req]
-  {:status 200
+(defn html [status body]
+  {:status status
    :headers {"Content-Type" "text/html"}
-   :body "<h1>Andrew Bruce</h1>"})
+   :body body})
+
+(defn app [req]
+  (let [path (:uri req)]
+    (cond
+     (= "/" path) (html 200 "<h1>Andrew Bruce</h1>")
+     :else        (html 404 "<h1>Not Found</h1>"))))
 
 (defn -main [port]
   (jetty/run-jetty app {:port (Integer. port) :join? false}))

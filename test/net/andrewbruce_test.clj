@@ -2,6 +2,10 @@
   (:require [clojure.test :refer :all]
             [net.andrewbruce :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest homepage
+
+  (testing "has content"
+    (is (re-find #"Andrew Bruce" (:body (app {:uri "/"})))))
+
+  (testing "404s with bogus path"
+    (is (= 404 (:status (app {:uri "/non-existent"}))))))
