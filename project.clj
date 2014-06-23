@@ -11,7 +11,8 @@
   :profiles {:uberjar {:aot :all
                        :main net.andrewbruce}
              :dev {:source-paths ["dev"]
-                   :dependencies [[org.clojure/tools.namespace "0.2.4"]]
+                   :dependencies [[org.clojure/tools.namespace "0.2.4"]
+                                  [ring-mock "0.1.5"]]
                    :plugins [[lein-ring "0.8.11"]]
                    :ring {:handler net.andrewbruce/app
                           :auto-reload? true
