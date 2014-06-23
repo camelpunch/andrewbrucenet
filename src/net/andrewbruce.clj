@@ -14,7 +14,9 @@
 (defn app [req]
   (let [path (:uri req)]
     (cond
-     (non-www-host req) (redirect (str "http://www.andrewbruce.net" (:uri req)))
+     (non-www-host req) (assoc
+                            (redirect (str "http://www.andrewbruce.net" (:uri req)))
+                          :status 301)
 
      (= "/" path) (html 200 "<h1>Andrew Bruce</h1>")
      :else        (html 404 "<h1>Not Found</h1>"))))
