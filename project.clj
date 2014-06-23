@@ -9,4 +9,8 @@
   :min-lein-version "2.0.0"
   :main net.andrewbruce
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:plugins [[lein-ring "0.8.11"]]
+                   :ring {:handler net.andrewbruce/app
+                          :auto-reload? true
+                          :auto-refresh? true}}})
