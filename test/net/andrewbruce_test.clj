@@ -1,7 +1,10 @@
 (ns net.andrewbruce-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :refer :all]
-            [net.andrewbruce :refer :all]))
+            [net.andrewbruce :refer :all]
+            [clojure.tools.namespace.repl :refer [refresh]]))
+
+(comment (refresh))
 
 (deftest homepage
   (testing "has content"
@@ -9,12 +12,22 @@
                  (:body (app (request :get "/"))))))
 
   (testing "404s with bogus path"
-    (is (= 404 (:status (app (request :get "/non-existent")))))))
+    (is (= 404
+           (:status (app (request :get "/non-existent")))))))
 
-(deftest cv-html
-  (testing "has link to Word format"
+(deftest cv
+  (testing "has link from /cv"
     (is (re-find #"<a href=\"/cv.doc\">"
-                 (:body (app (request :get "/cv")))))))
+                 (:body (app (request :get "/cv"))))))
+  (testing "can be fetched with correct content type"
+    (is (= "application/msword"
+           ((:headers (app (request :get "/cv.doc")))
+            "Content-Type")))))
+
+(deftest contact
+  (testing "gives out my address"
+    (is (re-find #"<a href=\"mailto:website-spamtastic@andrewbruce.net"
+                 (:body (app (request :get "/contact")))))))
 
 (deftest redirect-to-www
   (testing "preserves path"
