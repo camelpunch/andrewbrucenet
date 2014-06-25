@@ -1,13 +1,15 @@
 (ns net.andrewbruce.views
-  (require [hiccup.page :refer [html5]]
-           [hiccup.core :refer :all]))
+  (require [hiccup.page :refer [html5]]))
+
+(def menu-items
+  [["/" "Home"]
+   ["/cv" "CV"]
+   ["/contact" "Contact"]
+   ["http://blog.andrewbruce.net" "Blog"]])
 
 (def menu
-  [:ul
-   [:li [:a {:href "/"} "Home"]]
-   [:li [:a {:href "/cv"} "CV"]]
-   [:li [:a {:href "/contact"} "Contact"]]
-   [:li [:a {:href "http://blog.andrewbruce.net/"} "Blog"]]])
+  [:ul (for [item menu-items]
+         [:li [:a {:href (first item)} (second item)]])])
 
 (defn page [title & content]
   (html5
