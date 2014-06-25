@@ -43,8 +43,10 @@
         [:p "I wrote some Objective-C there, but mostly Ruby, JavaScript and CSS."]
         [:p "In 2014, our family returned to the UK for various reasons, not least of which was the US immigration system, which is stupid."]
         [:h2 "What's next"]
-        [:p "I've since become very interested in working with functional languages, and "
+        [:p "I've become very interested in working with functional languages, and "
          [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
+        [:p "This site (except the blog) is "
+         [:a {:href "https://github.com/camelpunch/andrewbrucenet/"} "open-source"] " and written in Clojure."]
         [:p "I'd be interested in "
          [:a {:href "/contact"} "hearing about"] " contract and freelance work, especially if it's remote or part-time."]
         [:p "In case you're wondering, the websites I get paid for don't look like this."]))
