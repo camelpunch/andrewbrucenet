@@ -1,8 +1,8 @@
 (ns net.andrewbruce
   (:require [ring.adapter.jetty :as jetty]
-            [ring.util.response :refer [redirect]]
-            [ring.middleware.content-type :refer :all]
-            [ring.middleware.not-modified :refer :all]
+            [ring.middleware.resource :refer [wrap-resource]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
+            [ring.middleware.not-modified :refer [wrap-not-modified]]
             [net.andrewbruce.views :as views])
   (:gen-class))
 
@@ -11,13 +11,19 @@
    :headers {"Content-Type" "text/html"}
    :body body})
 
-(defn app [req]
+(defn pages [req]
   (let [path (:uri req)]
     (cond
      (= "/" path)        (html 200 (views/home))
      (= "/cv" path)      (html 200 (views/cv))
      (= "/contact" path) (html 200 (views/contact))
      :else               (html 404 "<h1>Not Found</h1>"))))
+
+(def app
+  (-> pages
+      (wrap-resource "public")
+      (wrap-content-type)
+      (wrap-not-modified)))
 
 (defn -main [port]
   (jetty/run-jetty app {:port (Integer. port) :join? false}))

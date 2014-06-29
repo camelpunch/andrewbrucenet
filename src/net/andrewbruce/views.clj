@@ -14,7 +14,9 @@
 (defn page [title & content]
   (html5
    [:head
-    [:title title]]
+    [:title title]
+    [:link {:rel "Stylesheet" :type "text/css" :href "/normalize.css"}]
+    [:link {:rel "Stylesheet" :type "text/css" :href "/styles.css"}]]
    [:body menu content]))
 
 (defn home []
