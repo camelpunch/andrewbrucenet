@@ -8,8 +8,9 @@
    ["http://blog.andrewbruce.net" "Blog"]])
 
 (def menu
-  [:ul.menu (for [item menu-items]
-         [:li.menu-item [:a.nohist {:href (first item)} (second item)]])])
+  [:ul.menu (for [[href text] menu-items]
+              [:li.menu-item
+               [:a.nohist {:href href} text]])])
 
 (defn page [title & content]
   (html5
