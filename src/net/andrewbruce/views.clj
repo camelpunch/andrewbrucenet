@@ -56,9 +56,8 @@
 (defn cv []
   (page "Andrew Bruce: CV"
         [:h1 "CV"]
-        [:p "Warning: this thing has remnants of teenage excitement about things like having a driving license."]
-        [:p "It's mostly up-to-date, but needs a re-think."]
-        [:p [:a {:href "/cv.doc"} "Download in ancient .doc Word format"]]))
+        [:p "I've ditched the traditional Word document in favour of a "
+         [:a {:href "http://resume.linkedinlabs.com/dd7nxad1s"} "Linkedin-generated resume"] "."]))
 
 (defn contact []
   (page "Andrew Bruce: Contact"

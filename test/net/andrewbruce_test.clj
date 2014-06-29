@@ -16,26 +16,11 @@
            (:status (app (request :get "/non-existent")))))))
 
 (deftest cv
-  (testing "has link from /cv"
-    (is (re-find #"<a href=\"/cv.doc\">"
-                 (:body (app (request :get "/cv"))))))
-  (testing "can be fetched with correct content type"
-    (is (= "application/msword"
-           ((:headers (app (request :get "/cv.doc")))
-            "Content-Type")))))
+  (testing "has link to linkedin resume"
+    (is (re-find #"<a href=\"http://resume.linkedinlabs.com/dd7nxad1s\">"
+                 (:body (app (request :get "/cv")))))))
 
 (deftest contact
   (testing "gives out my address"
     (is (re-find #"<a href=\"mailto:website-spamtastic@andrewbruce.net"
                  (:body (app (request :get "/contact")))))))
-
-(deftest redirect-to-www
-  (testing "preserves path"
-    (is (= "http://www.andrewbruce.net/someplace"
-           ((:headers (app (assoc (request :get "/someplace")
-                             :server-name "andrewbruce.net")))
-            "Location"))))
-  (testing "uses 301 code"
-    (is (= 301
-           (:status (app (assoc (request :get "/someplace")
-                           :server-name "andrewbruce.net")))))))
