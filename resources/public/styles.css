@@ -1,0 +1,34 @@
+.container {
+    width: 90%;
+    max-width: 30em;
+    margin: 0 auto;
+}
+.menu {
+    padding: 0;
+    display: block;
+}
+.menu-item {
+    list-style-type: none;
+    padding-left: 0;
+    display: inline-block;
+}
+.menu-item a {
+    display: block;
+    padding-right: 12px;
+    font-size: 150%;
+}
+@media (max-width: 1000px) {
+    .menu-item a {
+        padding-right: 45px;
+    }
+    .container {
+        font-size: 270%;
+    }
+}
+a.nohist:link,
+a.nohist:visited {
+    color: blue;
+}
+a.nohist:active {
+    color: red;
+}
