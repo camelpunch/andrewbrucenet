@@ -53,7 +53,9 @@
         [:p "I wrote some Objective-C for iOS there, but mostly Ruby, JavaScript and CSS."]
         [:p "In 2014, our family returned to the UK for various reasons, not least of which was the US immigration system, which is stupid."]
         [:h2 "Current role"]
-        [:p "I'm now employed as a \"Software Engineer, Special Projects\" for Pivotal Cloud Foundry, working remotely from the UK."]
+        [:p "I'm now employed as a \"Software Engineer, Special Projects\" for "
+         [:a {:href "http://www.gopivotal.com/platform-as-a-service/pivotal-cf"} "Pivotal Cloud Foundry"]
+         ", working remotely from the UK."]
         [:h2 "Interests"]
         [:p "I've become very interested in working with functional languages, and "
          [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
