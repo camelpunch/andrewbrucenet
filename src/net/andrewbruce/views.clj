@@ -52,13 +52,13 @@
          " in San Francisco, working on seven projects. I anchored, or led, three of these teams."]
         [:p "I wrote some Objective-C for iOS there, but mostly Ruby, JavaScript and CSS."]
         [:p "In 2014, our family returned to the UK for various reasons, not least of which was the US immigration system, which is stupid."]
-        [:h2 "What's next"]
+        [:h2 "Current role"]
+        [:p "I'm now employed as a \"Software Engineer, Special Projects\" for Pivotal Cloud Foundry, working remotely from the UK."]
+        [:h2 "Interests"]
         [:p "I've become very interested in working with functional languages, and "
          [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
         [:p "This site (except the blog) is "
          [:a {:href "https://github.com/camelpunch/andrewbrucenet/"} "open-source"] " and written in Clojure."]
-        [:p "I'd be interested in "
-         [:a {:href "/contact"} "hearing about"] " contract and freelance work, especially if it's remote or part-time."]
         [:p "In case you're wondering, the websites I get paid for don't look like this."]
         menu))
 
