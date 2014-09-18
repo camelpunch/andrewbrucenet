@@ -25,5 +25,5 @@
       (wrap-content-type)
       (wrap-not-modified)))
 
-(defn -main [port]
-  (jetty/run-jetty app {:port (Integer. port) :join? false}))
+(defn -main []
+  (jetty/run-jetty app {:port (Integer. (or (System/getenv "PORT") 3000)) :join? false}))
