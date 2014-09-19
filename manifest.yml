@@ -4,4 +4,4 @@ applications:
     memory: 256M
     instances: 2
     path: target/uberjar/andrewbruce-standalone.jar
-    builpack: java_buildpack
+    buildpack: java_buildpack
