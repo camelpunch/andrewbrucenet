@@ -4,7 +4,8 @@
 (def menu-items
   [["/" "Home"]
    ["/cv" "CV"]
-   ["/contact" "Contact"]])
+   ["/contact" "Contact"]
+   ["http://blog.andrewbruce.net" "Blog"]])
 
 (def menu
   [:ul.menu (for [[href text] menu-items]
@@ -58,7 +59,7 @@
         [:h2 "Interests"]
         [:p "I've become very interested in working with functional languages, and "
          [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
-        [:p "This site is "
+        [:p "This site (except the blog) is "
          [:a {:href "https://github.com/camelpunch/andrewbrucenet/"} "open-source"] " and written in Clojure."]
         [:p "In case you're wondering, the websites I get paid for don't look like this."]
         menu))
