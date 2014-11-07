@@ -9,8 +9,8 @@
   :uberjar-name "andrewbruce-standalone.jar"
   :min-lein-version "2.0.0"
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all
-                       :main net.andrewbruce}
+  :main net.andrewbruce
+  :profiles {:uberjar {:aot :all}
              :dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring-mock "0.1.5"]]
