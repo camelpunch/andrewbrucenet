@@ -1,5 +1,5 @@
 (ns net.andrewbruce.views
-  (require [hiccup.page :refer [html5]]))
+  (:require [hiccup.page :refer [html5]]))
 
 (def menu-items
   [["/" "Home"]
