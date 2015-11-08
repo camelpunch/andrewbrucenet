@@ -4,7 +4,9 @@ This is the source for www.andrewbruce.net
 
 ## Installation
 
-git clone it.
+`git clone` it.
+
+Install [Leiningen](https://github.com/technomancy/leiningen).
 
 ## Development
 
