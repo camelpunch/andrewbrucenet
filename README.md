@@ -1,36 +1,25 @@
-# net.andrewbruce
+# andrewbruce.net
 
-FIXME: description
+This is the source for www.andrewbruce.net
 
 ## Installation
 
-Download from http://example.com/FIXME.
+git clone it.
 
-## Usage
+## Development
 
-FIXME: explanation
+`lein ring server`
 
-    $ java -jar net.andrewbruce-0.1.0-standalone.jar [args]
+## Deploy to Cloud Foundry
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+```
+lein uberjar
+cf push
+```
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2015 Andrew Bruce
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
