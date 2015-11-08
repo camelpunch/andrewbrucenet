@@ -3,8 +3,8 @@
   :url "http://www.andrewbruce.net"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.5.1"]
-                 [ring/ring-jetty-adapter "1.3.0"]
+  :dependencies [[org.clojure/clojure "1.7.0"]
+                 [ring/ring-jetty-adapter "1.4.0"]
                  [hiccup "1.0.5"]]
   :uberjar-name "andrewbruce-standalone.jar"
   :min-lein-version "2.0.0"
