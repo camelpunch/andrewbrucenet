@@ -24,44 +24,32 @@
            (rest content)]]))
 
 (defn home []
-  (page "Andrew Bruce: Software Developer"
-        [:h1 "A software developer"]
-        [:p "This is Andrew's personal web site. It contains boring information about Andrew."]
+  (page "Andrew Bruce: London Software Developer"
+        [:h1 "A software person in London"]
+        [:p "Andrew is a full-stack software developer."]
         [:img {:src "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"}]
-        [:p "This is what Andrew looks like when he eats."]
-        [:h2 "Computers"]
-        [:p "I like computers. I got into computers, and later the web, at an early age ("
-         [:a {:href "http://en.wikipedia.org/wiki/Amiga"} "Amiga"] " generation). "
-         "Naturally, this led me to apply to study Philosophy at "
-         [:a {:href "http://www.corpus.cam.ac.uk"} "university"] "."]
-        [:p "Instead of studying that, however, I spent most of my 'self-study' time making hate sites about my friends in PHP."]
-        [:p "But don't worry: I got out. "
-         "After a short stint as a PHP developer, I began "
-         [:a {:href "http://en.wikipedia.org/wiki/Test-driven_development"} "test-driving"]
-         " Ruby applications in an "
-         [:a {:href "http://en.wikipedia.org/wiki/Extreme_programming"} "XP"] " environment in 2006 at "
-         [:a {:href "http://www.serverchoice.com"} "ServerChoice"] "."]
-        [:p "Since then I've put in over four years of test-driven, "
-         [:a {:href "http://en.wikipedia.org/wiki/Pair_programming"} "pair-programmed"]
-         " work and another four years as a solo, TDD" "ing contractor."]
-        [:p "I worked on and off for BBC radio on their "
-         [:a {:href "http://www.bbc.co.uk/music/introducing/uploader"} "Introducing Uploader project"]
-         ". Alas, some of that involved PHP."]
-        [:p "I worked as a consultant for two and a half years at "
-         [:a {:href "http://pivotallabs.com/author/abruce/"} "Pivotal Labs"]
-         " in San Francisco, working on seven projects. I anchored, or led, three of these teams."]
-        [:p "I wrote some Objective-C for iOS there, but mostly Ruby, JavaScript and CSS."]
-        [:p "In 2014, our family returned to the UK for various reasons, not least of which was the US immigration system, which is stupid."]
+        [:p "Andrew eating breakfast outside, San Francisco, circa 2013."]
+        [:h2 "Primary skills"]
+        [:ul
+         [:li "Test Driven Development (TDD)"]
+         [:li "Pair programming and mentoring"]
+         [:li "Ruby"]
+         [:li "iOS, Objective-C and a bit of Swift."]
+         [:li "Clojure / ClojureScript"]
+         [:li "JavaScript"]]
         [:h2 "Current role"]
-        [:p "I'm now employed as a Software Engineer for "
-         [:a {:href "http://pivotal.io/platform"} "Pivotal Cloud Foundry"]]
+        [:p "I'm employed as a part-time Software Engineer for "
+         [:a {:href "http://pivotal.io/"} "Pivotal"]
+         ", currently on the RabbitMQ team, working on "
+         [:a {:href "https://github.com/camelpunch/RMQClient"}
+          "an iOS client for RabbitMQ."]]
         [:h2 "Interests"]
         [:p "I've become very interested in working with functional languages, and "
          [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
         [:p "This site (except the blog) is "
          [:a {:href "https://github.com/camelpunch/andrewbrucenet/"} "open-source"] " and written in Clojure."]
-        [:p "In case you're wondering, the websites I get paid for don't look like this."]
-        [:p "I live on a boat in Hackney, London."]
+        [:p "I live on a narrowboat in Hackney, London."]
+        [:p "Interested in pro-bono work for a good cause."]
         menu))
 
 (defn cv []
@@ -73,5 +61,6 @@
 (defn contact []
   (page "Andrew Bruce: Contact"
         [:h1 "Contact Andrew"]
-        [:p "Send me an email. I can send you my number if we get along."]
+        [:p [:a {:href "https://twitter.com/bruciemoose"} "Twitter"]]
+        [:p [:a {:href "https://uk.linkedin.com/in/andrew-bruce-96098682"} "LinkedIn"]]
         [:p [:a {:href "mailto:website-spamtastic@andrewbruce.net"} "website-spamtastic@andrewbruce.net"]]))
