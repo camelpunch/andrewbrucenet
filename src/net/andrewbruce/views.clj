@@ -63,4 +63,5 @@
         [:h1 "Contact Andrew"]
         [:p [:a {:href "https://twitter.com/bruciemoose"} "Twitter"]]
         [:p [:a {:href "https://uk.linkedin.com/in/andrew-bruce-96098682"} "LinkedIn"]]
+        [:p [:a {:href "https://github.com/camelpunch"} "GitHub"]]
         [:p [:a {:href "mailto:website-spamtastic@andrewbruce.net"} "website-spamtastic@andrewbruce.net"]]))
