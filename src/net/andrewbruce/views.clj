@@ -41,7 +41,7 @@
         [:p "I'm employed as a part-time Software Engineer for "
          [:a {:href "http://pivotal.io/"} "Pivotal"]
          ", currently on the RabbitMQ team, working on "
-         [:a {:href "https://github.com/camelpunch/RMQClient"}
+         [:a {:href "https://github.com/rabbitmq/rabbitmq-objc-client"}
           "an iOS client for RabbitMQ."]]
         [:h2 "Interests"]
         [:p "I've become very interested in working with functional languages, and "
