@@ -55,8 +55,8 @@
 (defn cv []
   (page "Andrew Bruce: CV"
         [:h1 "CV"]
-        [:p "I've ditched the traditional Word document in favour of a "
-         [:a {:href "http://resume.linkedinlabs.com/dd7nxad1s"} "Linkedin-generated resume"] "."]))
+        [:p "I've ditched the traditional Word document in favour of "
+         [:a {:href "https://uk.linkedin.com/in/andrew-bruce-96098682"} "Linkedin"] "."]))
 
 (defn contact []
   (page "Andrew Bruce: Contact"
