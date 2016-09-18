@@ -1,7 +1,7 @@
 ---
 applications:
   - name: www
-    memory: 128M
+    memory: 256M
     instances: 2
     path: target/uberjar/andrewbruce-standalone.jar
     buildpack: java_buildpack_offline
