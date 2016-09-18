@@ -4,6 +4,6 @@ applications:
     memory: 128M
     instances: 2
     path: target/uberjar/andrewbruce-standalone.jar
-    buildpack: java_buildpack_offline
+    buildpack: java_buildpack
     host: www
     domain: andrewbruce.net
