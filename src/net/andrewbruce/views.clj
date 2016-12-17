@@ -36,16 +36,14 @@
          [:li "Ruby"]
          [:li "iOS, Objective-C and a bit of Swift."]
          [:li "Clojure / ClojureScript"]
+         [:li "Elm"]
+         [:li "Haskell"]
+         [:li "Go"]
          [:li "JavaScript"]]
         [:h2 "Current role"]
-        [:p "I'm employed as a part-time Software Engineer for "
+        [:p "I'm employed as a part-time software engineer for "
          [:a {:href "http://pivotal.io/"} "Pivotal"]
-         ", currently on the RabbitMQ team, working on "
-         [:a {:href "https://github.com/rabbitmq/rabbitmq-objc-client"}
-          "an iOS client for RabbitMQ."]]
-        [:h2 "Interests"]
-        [:p "I've become very interested in working with functional languages, and "
-         [:a {:href "http://clojure.org"} "Clojure"] " in particular."]
+         ", currently on the CloudOps team."]
         [:p "This site (except the blog) is "
          [:a {:href "https://github.com/camelpunch/andrewbrucenet/"} "open-source"] " and written in Clojure."]
         [:p "I live on a narrowboat in Hackney, London."]
