@@ -32,3 +32,6 @@ a.nohist:visited {
 a.nohist:active {
     color: red;
 }
+.gibberish {
+    font-size: 50%;
+}

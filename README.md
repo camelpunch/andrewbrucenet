@@ -21,7 +21,7 @@ cf push
 
 ## License
 
-Copyright © 2015 Andrew Bruce
+Copyright © 2017 Andrew Bruce
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
