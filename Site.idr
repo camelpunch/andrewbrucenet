@@ -25,9 +25,6 @@ record Page where
   title : String
   content : Content
 
-total menuItem : Page -> Element InList
-menuItem (MkPage path menuTitle _ _) = Li "menu-item" [A path menuTitle]
-
 mutual
   total toHtml : Element Anywhere -> String
   toHtml (P str) = "<p>" ++ str ++ "</p>"
@@ -52,11 +49,3 @@ export
 html : Content -> String
 html [] = ""
 html (element :: rest) = toHtml element ++ html rest
-
-export
-assemblePage : Page -> List Page -> Content
-assemblePage currentPage allPages =
-  [ H1 (title currentPage)
-  , Ul "menu" (map menuItem allPages)
-  ] ++
-  content currentPage
