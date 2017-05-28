@@ -1,12 +1,12 @@
 module Site
 
 public export
-data Page = Home
-          | CV
-          | Contact
-
 data Class = MenuItem | Menu | Things | Thing
+
+public export
 data ElementContext = Anywhere | InList
+
+public export
 data Element : ElementContext -> Type where
   P : String -> Element Anywhere
   Img : String -> Element Anywhere
@@ -14,39 +14,22 @@ data Element : ElementContext -> Type where
   H2 : String -> Element Anywhere
   Ul : Class -> (List (Element InList)) -> Element Anywhere
   Li : Class -> (List (Element Anywhere)) -> Element InList
+  A : String -> String -> Element Anywhere
 
-export
+public export
 Content : Type
 Content = List (Element Anywhere)
 
-Path : Type
-Path = String
-
-total path : Page -> Path
-path Home = "/"
-path CV = "/cv"
-path Contact = "/contact"
+export
+record Page where
+  constructor MkPage
+  path : String
+  menuTitle : String
+  title : String
+  content : Content
 
 total menuItem : Page -> Element InList
-menuItem Home = Li MenuItem []
-menuItem CV = Li MenuItem []
-menuItem Contact = Li MenuItem []
-
-header : String -> List (Element Anywhere)
-header title = [ H1 title
-               , Ul Menu (map menuItem [Home, CV, Contact]) ]
-
-export
-total content : Page -> Content
-content Home =
-  header "A software person in London" ++
-  [ P    "Here is my face"
-  , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
-  , H2   "Things people usually pay me for"
-  , Ul Things [ Li Thing [ P "Test Driven Development (TDD)" ]]
-  ]
-content CV = header "CV"
-content Contact = header "Contact"
+menuItem (MkPage path menuTitle _ _) = Li MenuItem [A path menuTitle]
 
 mutual
   total toHtml : Element Anywhere -> String
@@ -58,6 +41,7 @@ mutual
   toHtml (Ul classAttr lis) = "<ul class=\"" ++ classToString classAttr ++ "\">" ++
                               lisToHtml lis ++
                               "</ul>"
+  toHtml (A href text) = "<a href=\"" ++ href ++ "\">" ++ text ++ "</a>"
 
   lisToHtml : List (Element InList) -> String
   lisToHtml lis = concat $ map liToHtml lis
@@ -77,3 +61,11 @@ export
 html : Content -> String
 html [] = ""
 html (element :: rest) = toHtml element ++ html rest
+
+export
+assemblePage : Page -> List Page -> Content
+assemblePage currentPage allPages =
+  [ H1 (title currentPage)
+  , Ul Menu (map menuItem allPages)
+  ] ++
+  content currentPage
