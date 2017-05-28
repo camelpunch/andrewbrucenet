@@ -1,9 +1,6 @@
 module Site
 
 public export
-data Class = MenuItem | Menu | Things | Thing
-
-public export
 data ElementContext = Anywhere | InList
 
 public export
@@ -12,8 +9,8 @@ data Element : ElementContext -> Type where
   Img : String -> Element Anywhere
   H1 : String -> Element Anywhere
   H2 : String -> Element Anywhere
-  Ul : Class -> (List (Element InList)) -> Element Anywhere
-  Li : Class -> (List (Element Anywhere)) -> Element InList
+  Ul : String -> (List (Element InList)) -> Element Anywhere
+  Li : String -> (List (Element Anywhere)) -> Element InList
   A : String -> String -> Element Anywhere
 
 public export
@@ -29,7 +26,7 @@ record Page where
   content : Content
 
 total menuItem : Page -> Element InList
-menuItem (MkPage path menuTitle _ _) = Li MenuItem [A path menuTitle]
+menuItem (MkPage path menuTitle _ _) = Li "menu-item" [A path menuTitle]
 
 mutual
   total toHtml : Element Anywhere -> String
@@ -37,8 +34,8 @@ mutual
   toHtml (Img str) = "<img src=\"" ++ str ++ "\"/>"
   toHtml (H1 str) = "<h1>" ++ str ++ "</h1>"
   toHtml (H2 str) = "<h2>" ++ str ++ "</h2>"
-  toHtml (Ul _classAttr []) = ""
-  toHtml (Ul classAttr lis) = "<ul class=\"" ++ classToString classAttr ++ "\">" ++
+  toHtml (Ul _ []) = ""
+  toHtml (Ul htmlClass lis) = "<ul class=\"" ++ htmlClass ++ "\">" ++
                               lisToHtml lis ++
                               "</ul>"
   toHtml (A href text) = "<a href=\"" ++ href ++ "\">" ++ text ++ "</a>"
@@ -47,15 +44,9 @@ mutual
   lisToHtml lis = concat $ map liToHtml lis
 
   liToHtml : Element InList -> String
-  liToHtml (Li htmlClass elements) = "<li class=\"" ++ classToString htmlClass ++ "\">" ++
+  liToHtml (Li htmlClass elements) = "<li class=\"" ++ htmlClass ++ "\">" ++
                                      concat (map toHtml elements) ++
                                      "</li>"
-
-  classToString : Class -> String
-  classToString MenuItem = "menu-item"
-  classToString Menu = "menu"
-  classToString Things = "things"
-  classToString Thing = "thing"
 
 export
 html : Content -> String
@@ -66,6 +57,6 @@ export
 assemblePage : Page -> List Page -> Content
 assemblePage currentPage allPages =
   [ H1 (title currentPage)
-  , Ul Menu (map menuItem allPages)
+  , Ul "menu" (map menuItem allPages)
   ] ++
   content currentPage

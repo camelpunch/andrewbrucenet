@@ -8,7 +8,7 @@ home =
   [ P    "Here is my face"
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
-  , Ul Things [ Li Thing [ P "Test Driven Development (TDD)" ]]
+  , Ul "things" [ Li "thing" [ P "Test Driven Development (TDD)" ]]
   ]
 
 cv : Page
