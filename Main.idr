@@ -2,13 +2,14 @@ module Main
 
 import Site
 
-data Class = Menu | MenuItem | Things | Thing
+data HtmlClass = Menu | MenuItem
 
-htmlClass : Class -> String
-htmlClass Menu = "menu"
-htmlClass MenuItem = "menu-item"
-htmlClass Things = "things"
-htmlClass Thing = "thing"
+htmlClass : HtmlClass -> Maybe String
+htmlClass Menu = Just "menu"
+htmlClass MenuItem = Just "menu-item"
+
+li : String -> Element InList
+li str = Li Nothing [ P str ]
 
 home : Page
 home =
@@ -16,7 +17,28 @@ home =
   [ P    "Here is my face"
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
-  , Ul (htmlClass Things) [ Li (htmlClass Thing) [ P "Test Driven Development (TDD)" ]]
+  , Ul Nothing
+    [ li "Test Driven Development (TDD)"
+    , li "Pair programming and mentoring"
+    , li "Complaining about what an Agile/XP team is(n't) doing"
+    , li "Working on CloudFoundry"
+    , li "Ruby"
+    , li "JavaScript"
+    , li "Objective-C"
+    , li "Swift"
+    , li "Go"
+    ]
+  , H2   "Things I wish people would pay me for"
+  , Ul Nothing
+    [ li "Idris"
+    , li "Haskell"
+    , li "Elm"
+    , li "Clojure / ClojureScript"
+    , li "Teaching them anything I know from the comfort of my home"
+    ]
+  , H2   "Current role"
+  -- TODO make links possible inside a P
+  , P    "I'm employed as a software engineer for Pivotal, currently on the CloudOps team."
   ]
 
 cv : Page
@@ -36,8 +58,9 @@ menu =
   , contact
   ]
 
-total menuItem : Page -> Element InList
-menuItem (MkPage path menuTitle _ _) = Li (htmlClass MenuItem) [A path menuTitle]
+menuItem : Page -> Element InList
+menuItem (MkPage path menuTitle _ _) =
+  Li (htmlClass MenuItem) [A path menuTitle]
 
 assemblePage : Page -> List Page -> Content
 assemblePage (MkPage _ _ title content) allPages =

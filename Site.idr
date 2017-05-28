@@ -9,8 +9,8 @@ data Element : ElementContext -> Type where
   Img : String -> Element Anywhere
   H1 : String -> Element Anywhere
   H2 : String -> Element Anywhere
-  Ul : String -> (List (Element InList)) -> Element Anywhere
-  Li : String -> (List (Element Anywhere)) -> Element InList
+  Ul : Maybe String -> (List (Element InList)) -> Element Anywhere
+  Li : Maybe String -> (List (Element Anywhere)) -> Element InList
   A : String -> String -> Element Anywhere
 
 public export
@@ -32,18 +32,23 @@ mutual
   toHtml (H1 str) = "<h1>" ++ str ++ "</h1>"
   toHtml (H2 str) = "<h2>" ++ str ++ "</h2>"
   toHtml (Ul _ []) = ""
-  toHtml (Ul htmlClass lis) = "<ul class=\"" ++ htmlClass ++ "\">" ++
-                              lisToHtml lis ++
-                              "</ul>"
+  toHtml (Ul Nothing lis) =
+    "<ul>" ++ lisToHtml lis ++ "</ul>"
+  toHtml (Ul (Just htmlClass) lis) =
+    "<ul class=\"" ++ htmlClass ++ "\">" ++ lisToHtml lis ++ "</ul>"
   toHtml (A href text) = "<a href=\"" ++ href ++ "\">" ++ text ++ "</a>"
 
   lisToHtml : List (Element InList) -> String
   lisToHtml lis = concat $ map liToHtml lis
 
+  elementsToHtml : (elements : List (Element Anywhere)) -> String
+  elementsToHtml elements = concat (map toHtml elements)
+
   liToHtml : Element InList -> String
-  liToHtml (Li htmlClass elements) = "<li class=\"" ++ htmlClass ++ "\">" ++
-                                     concat (map toHtml elements) ++
-                                     "</li>"
+  liToHtml (Li Nothing elements) =
+    "<li>" ++ elementsToHtml elements ++ "</li>"
+  liToHtml (Li (Just htmlClass) elements) =
+    "<li class=\"" ++ htmlClass ++ "\">" ++ elementsToHtml elements ++ "</li>"
 
 export
 html : Content -> String
