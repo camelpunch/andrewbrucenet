@@ -1,10 +1,11 @@
 module Site
 
+public export
 data Page = Home
           | CV
           | Contact
 
-data Class = MenuItem | Menu
+data Class = MenuItem | Menu | Things | Thing
 data ElementContext = Anywhere | InList
 data Element : ElementContext -> Type where
   P : String -> Element Anywhere
@@ -14,6 +15,7 @@ data Element : ElementContext -> Type where
   Ul : Class -> (List (Element InList)) -> Element Anywhere
   Li : Class -> (List (Element Anywhere)) -> Element InList
 
+export
 Content : Type
 Content = List (Element Anywhere)
 
@@ -27,21 +29,24 @@ path Contact = "/contact"
 
 total menuItem : Page -> Element InList
 menuItem Home = Li MenuItem []
-menuItem CV = ?menuItem_rhs_2
-menuItem Contact = ?menuItem_rhs_3
+menuItem CV = Li MenuItem []
+menuItem Contact = Li MenuItem []
 
 header : String -> List (Element Anywhere)
-header title = [ Ul Menu (map menuItem [Home, CV, Contact]) ]
+header title = [ H1 title
+               , Ul Menu (map menuItem [Home, CV, Contact]) ]
 
+export
 total content : Page -> Content
 content Home =
   header "A software person in London" ++
   [ P    "Here is my face"
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
+  , Ul Things [ Li Thing [ P "Test Driven Development (TDD)" ]]
   ]
-content CV = ?content_rhs_2
-content Contact = ?content_rhs_3
+content CV = header "CV"
+content Contact = header "Contact"
 
 mutual
   total toHtml : Element Anywhere -> String
@@ -65,7 +70,10 @@ mutual
   classToString : Class -> String
   classToString MenuItem = "menu-item"
   classToString Menu = "menu"
+  classToString Things = "things"
+  classToString Thing = "thing"
 
+export
 html : Content -> String
 html [] = ""
 html (element :: rest) = toHtml element ++ html rest
