@@ -54,7 +54,7 @@ mutual
   liToHtml (Li (Just htmlClass) elements) =
     "<li class=\"" ++ htmlClass ++ "\">" ++ elementsToHtml elements ++ "</li>"
 
-  elementsToHtml : (elements : List (Element Anywhere)) -> String
+  elementsToHtml : List (Element Anywhere) -> String
   elementsToHtml elements = concat $ map toHtml elements
 
 export
