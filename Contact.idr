@@ -5,5 +5,5 @@ import Site
 export
 contact : Page
 contact =
-  MkPage "/contact" "Contact" "Contact"
+  MkPage "/contact" "contact" "Contact" "Contact"
   []

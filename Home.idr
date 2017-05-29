@@ -5,7 +5,7 @@ import Site
 export
 home : Page
 home =
-  MkPage "/" "Home" "A software person in London"
+  MkPage "/" "index" "Home" "A software person in London"
   [ P
     [ Text "Here is my face"
     ]

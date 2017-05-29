@@ -5,5 +5,5 @@ import Site
 export
 cv : Page
 cv =
-  MkPage "/cv" "CV" "CV"
+  MkPage "/cv" "cv" "CV" "CV"
   []

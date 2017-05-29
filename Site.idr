@@ -27,6 +27,7 @@ public export
 record Page where
   constructor MkPage
   path : String
+  filepath : String
   menuTitle : String
   title : String
   content : Content

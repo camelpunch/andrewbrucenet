@@ -21,11 +21,11 @@ htmlClass Menu = Just "menu"
 htmlClass MenuItem = Just "menu-item"
 
 menuItem : Page -> Element InList
-menuItem (MkPage path menuTitle _ _) =
+menuItem (MkPage path _ menuTitle _ _) =
   Li (htmlClass MenuItem) [A path menuTitle]
 
 assemblePage : Page -> List Page -> Element Root
-assemblePage (MkPage _ _ title content) allPages =
+assemblePage (MkPage _ _ _ title content) allPages =
   Html $
   [ H1 title
   , Ul (htmlClass Menu) (map menuItem allPages)
@@ -35,21 +35,24 @@ pageList : String
 pageList = concat $ intersperse ", " (map menuTitle menu)
 
 pagesWithName : String -> List Page -> List Page
-pagesWithName name pages = filter (\p => menuTitle p == name) pages
+pagesWithName name pages = filter (\p => filepath p == name) pages
+
+die : String -> IO ()
+die msg = do
+  fPutStrLn stderr msg
+  exitFailure
 
 happyPath : (pageName : String) -> List Page -> IO ()
 happyPath pageName pages =
   case pagesWithName pageName pages of
-       []     => do putStrLn "couldn't find a matching page"
-                    exitFailure
+       []     => die "couldn't find a matching page"
        [page] => putStr $ html (assemblePage page pages)
-       _pages => do putStrLn "multiple pages match"
-                    exitFailure
+       _pages => die "multiple pages match"
 
 main : IO ()
 main = do
   args <- getArgs
   case args of
-    []            => putStrLn $ "must provide a page: " ++ pageList
+    []            => die $ "must provide a page: " ++ pageList
     [_, pageName] => happyPath pageName menu
-    _multiple     => putStrLn "only one page argument allowed"
+    _multiple     => die "only one page argument allowed"
