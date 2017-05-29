@@ -41,8 +41,8 @@ mutual
   toHtml (Ul _ []) = ""
   toHtml (Ul Nothing lis) =
     "<ul>" ++ lisToHtml lis ++ "</ul>"
-  toHtml (Ul (Just htmlClass) lis) =
-    "<ul class=\"" ++ htmlClass ++ "\">" ++ lisToHtml lis ++ "</ul>"
+  toHtml (Ul (Just ulClass) lis) =
+    "<ul class=\"" ++ ulClass ++ "\">" ++ lisToHtml lis ++ "</ul>"
   toHtml (A href text) = "<a href=\"" ++ href ++ "\">" ++ text ++ "</a>"
 
   lisToHtml : List (Element InList) -> String
@@ -55,7 +55,7 @@ mutual
     "<li class=\"" ++ htmlClass ++ "\">" ++ elementsToHtml elements ++ "</li>"
 
   elementsToHtml : (elements : List (Element Anywhere)) -> String
-  elementsToHtml elements = concat (map toHtml elements)
+  elementsToHtml elements = concat $ map toHtml elements
 
 export
 render : Content -> String
