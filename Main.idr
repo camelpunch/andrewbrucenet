@@ -9,12 +9,14 @@ htmlClass Menu = Just "menu"
 htmlClass MenuItem = Just "menu-item"
 
 li : String -> Element InList
-li str = Li Nothing [ P str ]
+li str = Li Nothing [ P [ Text str ] ]
 
 home : Page
 home =
   MkPage "/" "Home" "A software person in London"
-  [ P    "Here is my face"
+  [ P
+    [ Text "Here is my face"
+    ]
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
   , Ul Nothing
@@ -37,8 +39,11 @@ home =
     , li "Teaching them anything I know from the comfort of my home"
     ]
   , H2   "Current role"
-  -- TODO make links possible inside a P
-  , P    "I'm employed as a software engineer for Pivotal, currently on the CloudOps team."
+  , P
+    [ Text "I'm employed as a software engineer for "
+    , A    "https://pivotal.io/" "Pivotal"
+    , Text ", currently on the CloudOps team."
+    ]
   ]
 
 cv : Page

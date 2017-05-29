@@ -5,7 +5,8 @@ data ElementContext = Anywhere | InList
 
 public export
 data Element : ElementContext -> Type where
-  P : String -> Element Anywhere
+  P : List (Element Anywhere) -> Element Anywhere
+  Text : String -> Element Anywhere
   Img : String -> Element Anywhere
   H1 : String -> Element Anywhere
   H2 : String -> Element Anywhere
@@ -27,7 +28,8 @@ record Page where
 
 mutual
   total toHtml : Element Anywhere -> String
-  toHtml (P str) = "<p>" ++ str ++ "</p>"
+  toHtml (P els) = "<p>" ++ elementsToHtml els ++ "</p>"
+  toHtml (Text str) = str
   toHtml (Img str) = "<img src=\"" ++ str ++ "\"/>"
   toHtml (H1 str) = "<h1>" ++ str ++ "</h1>"
   toHtml (H2 str) = "<h2>" ++ str ++ "</h2>"
