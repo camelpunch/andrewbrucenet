@@ -23,7 +23,7 @@ public export
 Content : Type
 Content = List (Element Anywhere)
 
-export
+public export
 record Page where
   constructor MkPage
   path : String
