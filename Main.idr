@@ -22,12 +22,12 @@ menuItem : Page -> Element InList
 menuItem (MkPage path menuTitle _ _) =
   Li (htmlClass MenuItem) [A path menuTitle]
 
-assemblePage : Page -> List Page -> Content
+assemblePage : Page -> List Page -> Element Root
 assemblePage (MkPage _ _ title content) allPages =
+  Html $
   [ H1 title
   , Ul (htmlClass Menu) (map menuItem allPages)
-  ] ++
-  content
+  ] ++ content
 
 main : IO ()
-main = putStrLn (html (assemblePage home menu))
+main = putStr (html (assemblePage home menu))

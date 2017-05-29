@@ -1,10 +1,11 @@
 module Site
 
 public export
-data ElementContext = Anywhere | InList
+data ElementContext = Root | Anywhere | InList
 
 public export
 data Element : ElementContext -> Type where
+  Html : List (Element Anywhere) -> Element Root
   P : List (Element Anywhere) -> Element Anywhere
   Text : String -> Element Anywhere
   Img : String -> Element Anywhere
@@ -57,6 +58,14 @@ mutual
   elementsToHtml elements = concat (map toHtml elements)
 
 export
-html : Content -> String
-html [] = ""
-html (element :: rest) = toHtml element ++ html rest
+render : Content -> String
+render [] = ""
+render (element :: rest) = toHtml element ++ render rest
+
+export
+html : Element Root -> String
+html (Html content) =
+  """<!DOCTYPE html>
+<html>
+""" ++ render content ++ """
+</html>"""
