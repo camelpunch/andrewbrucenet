@@ -12,7 +12,7 @@ clean:
 	rm -rf bin/ public/
 
 generator: bin
-	idris Main.idr -o bin/$@
+	idris -i src src/Main.idr -o bin/$@
 
 bin public:
 	mkdir $@
