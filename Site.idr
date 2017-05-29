@@ -14,6 +14,10 @@ data Element : ElementContext -> Type where
   Li : Maybe String -> (List (Element Anywhere)) -> Element InList
   A : String -> String -> Element Anywhere
 
+export
+li : String -> Element InList
+li str = Li Nothing [ P [ Text str ] ]
+
 public export
 Content : Type
 Content = List (Element Anywhere)
@@ -43,14 +47,14 @@ mutual
   lisToHtml : List (Element InList) -> String
   lisToHtml lis = concat $ map liToHtml lis
 
-  elementsToHtml : (elements : List (Element Anywhere)) -> String
-  elementsToHtml elements = concat (map toHtml elements)
-
   liToHtml : Element InList -> String
   liToHtml (Li Nothing elements) =
     "<li>" ++ elementsToHtml elements ++ "</li>"
   liToHtml (Li (Just htmlClass) elements) =
     "<li class=\"" ++ htmlClass ++ "\">" ++ elementsToHtml elements ++ "</li>"
+
+  elementsToHtml : (elements : List (Element Anywhere)) -> String
+  elementsToHtml elements = concat (map toHtml elements)
 
 export
 html : Content -> String
