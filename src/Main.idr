@@ -31,19 +31,16 @@ assemblePage (MkPage _ _ _ title content) allPages =
   , Ul (htmlClass Menu) (map menuItem allPages)
   ] ++ content
 
-pageList : String
-pageList = concat $ intersperse ", " (map menuTitle menu)
-
-pagesWithName : String -> List Page -> List Page
-pagesWithName name pages = filter (\p => filepath p == name) pages
-
 die : String -> IO ()
 die msg = do
   fPutStrLn stderr msg
   exitFailure
 
-happyPath : (pageName : String) -> List Page -> IO ()
-happyPath pageName pages =
+pagesWithName : String -> List Page -> List Page
+pagesWithName name pages = filter (\p => filepath p == name) pages
+
+generate : String -> List Page -> IO ()
+generate pageName pages =
   case pagesWithName pageName pages of
        []     => die "couldn't find a matching page"
        [page] => putStr $ html (assemblePage page pages)
@@ -51,8 +48,9 @@ happyPath pageName pages =
 
 main : IO ()
 main = do
+  let pageList = concat $ intersperse ", " (map filepath menu)
   args <- getArgs
   case args of
     []            => die $ "must provide a page: " ++ pageList
-    [_, pageName] => happyPath pageName menu
+    [_, pageName] => generate pageName menu
     _multiple     => die "only one page argument allowed"
