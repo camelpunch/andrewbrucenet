@@ -19,15 +19,14 @@ htmlClass Menu = Just "menu"
 htmlClass MenuItem = Just "menu-item"
 
 menuItem : Page -> Element InList
-menuItem (MkPage path _ menuTitle _ _) =
-  Li (htmlClass MenuItem) [A path menuTitle]
+menuItem page = Li (htmlClass MenuItem) [A (path page) (menuTitle page)]
 
 assemblePage : Page -> List Page -> Element Root
-assemblePage (MkPage _ _ _ title content) allPages =
+assemblePage page allPages =
   Html $
-  [ H1 title
+  [ H1 $ title page
   , Ul (htmlClass Menu) (map menuItem allPages)
-  ] ++ content
+  ] ++ content page
 
 main : IO ()
 main = getArgs >>= generate assemblePage menu
