@@ -9,10 +9,14 @@ $(pages): generator public
 	bin/generator $@ > public/$@
 
 clean:
-	rm -rf bin/ public/
+	rm -rf bin/ public/ src/*.ibc
 
 generator: bin
-	idris -i src src/Main.idr -o bin/$@
+	idris \
+	--sourcepath src \
+	--idrispath src \
+	--output bin/$@ \
+	src/Main.idr
 
 bin public:
 	mkdir $@
