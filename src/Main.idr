@@ -1,7 +1,5 @@
 module Main
 
-import System
-
 import Site
 import Home
 import CV
@@ -31,26 +29,5 @@ assemblePage (MkPage _ _ _ title content) allPages =
   , Ul (htmlClass Menu) (map menuItem allPages)
   ] ++ content
 
-die : String -> IO ()
-die msg = do
-  fPutStrLn stderr msg
-  exitFailure
-
-pagesWithName : String -> List Page -> List Page
-pagesWithName name pages = filter (\p => filepath p == name) pages
-
-generate : String -> List Page -> IO ()
-generate pageName pages =
-  case pagesWithName pageName pages of
-       []     => die "couldn't find a matching page"
-       [page] => putStr $ html (assemblePage page pages)
-       _pages => die "multiple pages match"
-
 main : IO ()
-main = do
-  let pageList = concat $ intersperse ", " (map filepath menu)
-  args <- getArgs
-  case args of
-    []            => die $ "must provide a page: " ++ pageList
-    [_, pageName] => generate pageName menu
-    _multiple     => die "only one page argument allowed"
+main = getArgs >>= generate assemblePage menu
