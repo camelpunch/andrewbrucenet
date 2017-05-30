@@ -29,17 +29,45 @@ data Element : ElementContext -> Type where
   Li : Maybe String -> (List (Element General)) -> Element InList
   A : String -> String -> Element General
 
-Show LinkRel where
-  show Stylesheet = "Stylesheet"
+mutual
+  showEls : Show a => List a -> String
+  showEls = concat . map show
 
-Show LinkType where
-  show TextCss = "text/css"
+  Show (Element RootChild) where
+    show (Head content) = "<body>" ++ showEls content ++ "</body>"
+    show (Body content) = "<head>" ++ showEls content ++ "</head>"
 
-Show (Element HeadChild) where
-  show (Link rel t href) =
-    "<link rel=\"" ++ show rel ++ "\" type=\"" ++ show t ++ "\" href=\"" ++ href ++ "\"/>"
-  show (Title str) =
-    "<title>" ++ str ++ "</title>"
+  Show (Element HeadChild) where
+    show (Link rel t href) =
+      "<link rel=\"" ++ show rel ++ "\" type=\"" ++ show t ++ "\" href=\"" ++ href ++ "\"/>"
+    show (Title str) =
+      "<title>" ++ str ++ "</title>"
+
+  Show LinkRel where
+    show Stylesheet = "Stylesheet"
+
+  Show LinkType where
+    show TextCss = "text/css"
+
+  Show (Element InList) where
+    show (Li Nothing els) =
+      "<li>" ++ showEls els ++ "</li>"
+    show (Li (Just c) els) =
+      "<li class=\"" ++ c ++ "\">" ++ showEls els ++ "</li>"
+
+  Show (Element General) where
+    show (P els) = "<p>" ++ show els ++ "</p>"
+    show (Text str) = str
+    show (Img src) = "<img src=\"" ++ src ++ "\"/>"
+    show (H1 str) = "<h1>" ++ str ++ "</h1>"
+    show (H2 str) = "<h2>" ++ str ++ "</h2>"
+    show (Ul _ []) = ""
+    show (Ul Nothing lis) =
+      "<ul>" ++ showEls lis ++ "</ul>"
+    show (Ul (Just ulClass) lis) =
+      "<ul class=\"" ++ ulClass ++ "\">" ++ showEls lis ++ "</ul>"
+    show (A href str) =
+      "<a href=\"" ++ href ++ "\">" ++ str ++ "</a>"
 
 export
 li : String -> Element InList
@@ -54,50 +82,11 @@ record Page where
   title : String
   content : List (Element General)
 
-mutual
-  total toHtml : Element General -> String
-  toHtml (P els) = "<p>" ++ elementsToHtml els ++ "</p>"
-  toHtml (Text str) = str
-  toHtml (Img str) = "<img src=\"" ++ str ++ "\"/>"
-  toHtml (H1 str) = "<h1>" ++ str ++ "</h1>"
-  toHtml (H2 str) = "<h2>" ++ str ++ "</h2>"
-  toHtml (Ul _ []) = ""
-  toHtml (Ul Nothing lis) =
-    "<ul>" ++ lisToHtml lis ++ "</ul>"
-  toHtml (Ul (Just ulClass) lis) =
-    "<ul class=\"" ++ ulClass ++ "\">" ++ lisToHtml lis ++ "</ul>"
-  toHtml (A href text) = "<a href=\"" ++ href ++ "\">" ++ text ++ "</a>"
-
-  lisToHtml : List (Element InList) -> String
-  lisToHtml lis = concat $ map liToHtml lis
-
-  liToHtml : Element InList -> String
-  liToHtml (Li Nothing elements) =
-    "<li>" ++ elementsToHtml elements ++ "</li>"
-  liToHtml (Li (Just htmlClass) elements) =
-    "<li class=\"" ++ htmlClass ++ "\">" ++ elementsToHtml elements ++ "</li>"
-
-  elementsToHtml : List (Element General) -> String
-  elementsToHtml elements = concat $ map toHtml elements
-
-headElementsToHtml : List (Element HeadChild) -> String
-headElementsToHtml content = concat $ map show content
-
-rootChildToHtml : Element RootChild -> String
-rootChildToHtml (Body content) = "<body>" ++ elementsToHtml content ++ "</body>"
-rootChildToHtml (Head content) = "<head>" ++ headElementsToHtml content ++ "</head>"
-
-export
-render : List (Element RootChild) -> String
-render [] = ""
-render (element :: rest) = rootChildToHtml element ++ render rest
-
-export
 html : Element Root -> String
 html (Html content) =
   """<!DOCTYPE html>
 <html>
-""" ++ render content ++ """
+""" ++ showEls content ++ """
 </html>"""
 
 export
