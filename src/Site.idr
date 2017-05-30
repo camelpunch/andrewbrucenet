@@ -3,11 +3,22 @@ module Site
 import System
 
 public export
-data ElementContext = Root | General | InList
+data ElementContext = Root | RootChild | HeadChild | InList | General
+
+public export
+data LinkRel = Stylesheet
+%name LinkRel rel
+
+public export
+data LinkType = TextCss
+%name LinkType t
 
 public export
 data Element : ElementContext -> Type where
-  Html : List (Element General) -> Element Root
+  Html : List (Element RootChild) -> Element Root
+  Head : List (Element HeadChild) -> Element RootChild
+  Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
+  Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
   Text : String -> Element General
   Img : String -> Element General
@@ -17,13 +28,19 @@ data Element : ElementContext -> Type where
   Li : Maybe String -> (List (Element General)) -> Element InList
   A : String -> String -> Element General
 
+Show LinkRel where
+  show Stylesheet = "Stylesheet"
+
+Show LinkType where
+  show TextCss = "text/css"
+
+Show (Element HeadChild) where
+  show (Link rel t href) =
+    "<link rel=\"" ++ show rel ++ "\" type=\"" ++ show t ++ "\" href=\"" ++ href ++ "\"/>"
+
 export
 li : String -> Element InList
 li str = Li Nothing [ P [ Text str ] ]
-
-public export
-Content : Type
-Content = List (Element General)
 
 public export
 record Page where
@@ -32,7 +49,7 @@ record Page where
   filepath : String
   menuTitle : String
   title : String
-  content : Content
+  content : List (Element General)
 
 mutual
   total toHtml : Element General -> String
@@ -60,10 +77,17 @@ mutual
   elementsToHtml : List (Element General) -> String
   elementsToHtml elements = concat $ map toHtml elements
 
+headElementsToHtml : List (Element HeadChild) -> String
+headElementsToHtml content = concat $ map show content
+
+rootChildToHtml : Element RootChild -> String
+rootChildToHtml (Body content) = "<body>" ++ elementsToHtml content ++ "</body>"
+rootChildToHtml (Head content) = "<head>" ++ headElementsToHtml content ++ "</head>"
+
 export
-render : Content -> String
+render : List (Element RootChild) -> String
 render [] = ""
-render (element :: rest) = toHtml element ++ render rest
+render (element :: rest) = rootChildToHtml element ++ render rest
 
 export
 html : Element Root -> String

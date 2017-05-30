@@ -24,9 +24,15 @@ menuItem page = Li (htmlClass MenuItem) [A (path page) (menuTitle page)]
 assemblePage : Page -> List Page -> Element Root
 assemblePage page allPages =
   Html $
-  [ H1 $ title page
-  , Ul (htmlClass Menu) (map menuItem allPages)
-  ] ++ content page
+  [ Head $
+    [ Link Stylesheet TextCss "normalize.css"
+    , Link Stylesheet TextCss "styles.css"
+    ]
+  , Body $
+    [ H1 $ title page
+    , Ul (htmlClass Menu) (map menuItem allPages)
+    ] ++ content page
+  ]
 
 main : IO ()
 main = getArgs >>= generate assemblePage menu
