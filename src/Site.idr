@@ -17,6 +17,7 @@ public export
 data Element : ElementContext -> Type where
   Html : List (Element RootChild) -> Element Root
   Head : List (Element HeadChild) -> Element RootChild
+  Title : String -> Element HeadChild
   Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
@@ -37,6 +38,8 @@ Show LinkType where
 Show (Element HeadChild) where
   show (Link rel t href) =
     "<link rel=\"" ++ show rel ++ "\" type=\"" ++ show t ++ "\" href=\"" ++ href ++ "\"/>"
+  show (Title str) =
+    "<title>" ++ str ++ "</title>"
 
 export
 li : String -> Element InList

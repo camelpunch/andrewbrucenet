@@ -25,7 +25,8 @@ assemblePage : Page -> List Page -> Element Root
 assemblePage page allPages =
   Html $
   [ Head $
-    [ Link Stylesheet TextCss "normalize.css"
+    [ Title $ "Andrew Bruce: " ++ title page
+    , Link Stylesheet TextCss "normalize.css"
     , Link Stylesheet TextCss "styles.css"
     ]
   , Body $
