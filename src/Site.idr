@@ -29,19 +29,38 @@ data Element : ElementContext -> Type where
   Li : Maybe String -> (List (Element General)) -> Element InList
   A : String -> String -> Element General
 
+attributes : (attrs : List (String, String)) -> String
+attributes attrs =
+  concat $ intersperse " " (map (\(k, v) => k ++ "=\"" ++ v ++ "\"") attrs)
+
+tag : (name : String) ->
+      (attrs : List (String, String)) ->
+      (content : Maybe String) ->
+      String
+tag name [] Nothing =
+  "<" ++ name ++ "/>"
+tag name [] (Just content) =
+  "<" ++ name ++ ">" ++ content ++ "</" ++ name ++ ">"
+tag name attrs Nothing =
+  "<" ++ name ++ " " ++ attributes attrs ++ "/>"
+tag name attrs (Just content) =
+  "<" ++ name ++ " " ++ attributes attrs ++ ">" ++ content ++ "</" ++ name ++ ">"
+
 mutual
   showEls : Show a => List a -> String
   showEls = concat . map show
 
   Show (Element RootChild) where
-    show (Head content) = "<body>" ++ showEls content ++ "</body>"
-    show (Body content) = "<head>" ++ showEls content ++ "</head>"
+    show (Head content) = tag "head" [] $ Just (showEls content)
+    show (Body content) = tag "body" [] $ Just (showEls content)
 
   Show (Element HeadChild) where
-    show (Link rel t href) =
-      "<link rel=\"" ++ show rel ++ "\" type=\"" ++ show t ++ "\" href=\"" ++ href ++ "\"/>"
-    show (Title str) =
-      "<title>" ++ str ++ "</title>"
+    show (Link rel t href) = tag "link" [ ("rel", show rel)
+                                        , ("type", show t)
+                                        , ("href", href)
+                                        ]
+                                        Nothing
+    show (Title str) = tag "title" [] $ Just str
 
   Show LinkRel where
     show Stylesheet = "Stylesheet"
@@ -50,24 +69,19 @@ mutual
     show TextCss = "text/css"
 
   Show (Element InList) where
-    show (Li Nothing els) =
-      "<li>" ++ showEls els ++ "</li>"
-    show (Li (Just c) els) =
-      "<li class=\"" ++ c ++ "\">" ++ showEls els ++ "</li>"
+    show (Li Nothing els) = tag "li" [] $ Just (showEls els)
+    show (Li (Just c) els) = tag "li" [ ("class", c) ] $ Just (showEls els)
 
   Show (Element General) where
-    show (P els) = "<p>" ++ show els ++ "</p>"
+    show (P els) = tag "p" [] $ Just (showEls els)
     show (Text str) = str
-    show (Img src) = "<img src=\"" ++ src ++ "\"/>"
-    show (H1 str) = "<h1>" ++ str ++ "</h1>"
-    show (H2 str) = "<h2>" ++ str ++ "</h2>"
+    show (Img src) = tag "img" [ ("src", src) ] Nothing
+    show (H1 str) = tag "h1" [] $ Just str
+    show (H2 str) = tag "h2" [] $ Just str
     show (Ul _ []) = ""
-    show (Ul Nothing lis) =
-      "<ul>" ++ showEls lis ++ "</ul>"
-    show (Ul (Just ulClass) lis) =
-      "<ul class=\"" ++ ulClass ++ "\">" ++ showEls lis ++ "</ul>"
-    show (A href str) =
-      "<a href=\"" ++ href ++ "\">" ++ str ++ "</a>"
+    show (Ul Nothing lis) = tag "ul" [] $ Just (showEls lis)
+    show (Ul (Just c) lis) = tag "ul" [ ("class", c) ] $ Just (showEls lis)
+    show (A href str) = tag "a" [ ("href", href) ] $ Just str
 
 export
 li : String -> Element InList
@@ -83,11 +97,7 @@ record Page where
   content : List (Element General)
 
 html : Element Root -> String
-html (Html content) =
-  """<!DOCTYPE html>
-<html>
-""" ++ showEls content ++ """
-</html>"""
+html (Html els) = "<!DOCTYPE html>" ++ (tag "html" [] $ Just (showEls els))
 
 export
 generate : (Page -> List Page -> Element Root) ->
