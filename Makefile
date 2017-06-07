@@ -6,7 +6,7 @@ vpath % := public
 
 all: $(pages)
 
-$(pages): generator public $(dirs)
+$(pages): generator $(dirs)
 	bin/generator $(subst index.html,index,$(subst /index.html,,$@)) > public/$@
 
 clean:
