@@ -22,10 +22,10 @@ generator: bin
 	src/Main.idr
 
 $(dirs): public
-	mkdir public/$@
+	-mkdir public/$@
 
 bin public:
-	mkdir $@
+	-mkdir $@
 
 serve: $(pages)
 	cd public && python -m SimpleHTTPServer
