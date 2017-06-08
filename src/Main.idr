@@ -26,12 +26,14 @@ assemblePage page allPages =
   Html $
   [ Head $
     [ Title $ "Andrew Bruce: " ++ title page
-    , Link Stylesheet TextCss "normalize.css"
-    , Link Stylesheet TextCss "styles.css"
+    , Link Stylesheet TextCss "/normalize.css"
+    , Link Stylesheet TextCss "/styles.css"
     ]
   , Body $
-    [ H1 $ title page
-    , Ul (htmlClass Menu) (map menuItem allPages)
+    [ Div (Just "container")
+      [ H1 $ title page
+      , Ul (htmlClass Menu) (map menuItem allPages)
+      ]
     ] ++ content page
   ]
 

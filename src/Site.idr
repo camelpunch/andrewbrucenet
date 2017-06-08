@@ -21,6 +21,7 @@ data Element : ElementContext -> Type where
   Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
+  Div : Maybe String -> List (Element General) -> Element General
   Text : String -> Element General
   Img : String -> Element General
   H1 : String -> Element General
@@ -74,6 +75,8 @@ mutual
 
   Show (Element General) where
     show (P els) = tag "p" [] $ Just (showEls els)
+    show (Div Nothing els) = tag "div" [] $ Just (showEls els)
+    show (Div (Just c) els) = tag "div" [ ("class", c) ] $ Just (showEls els)
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
     show (H1 str) = tag "h1" [] $ Just str
