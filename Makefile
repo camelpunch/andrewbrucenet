@@ -6,7 +6,7 @@ vpath generator := bin
 vpath %.idr := src
 vpath % := public
 
-all: $(pages)
+default: $(pages)
 
 $(pages): generator $(dirs) $(objects)
 	bin/generator $(subst index.html,index,$(subst /index.html,,$@)) > public/$@
