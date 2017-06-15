@@ -21,15 +21,15 @@ data Element : ElementContext -> Type where
   Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
-  Div : Maybe String -> List (Element General) -> Element General
-  Pre : Maybe String -> String -> Element General
+  Div : List String -> List (Element General) -> Element General
+  Pre : List String -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
   H1 : String -> Element General
   H2 : String -> Element General
-  Ul : Maybe String -> (List (Element InList)) -> Element General
-  Li : Maybe String -> (List (Element General)) -> Element InList
-  A : String -> String -> Element General
+  Ul : List String -> (List (Element InList)) -> Element General
+  Li : List String -> (List (Element General)) -> Element InList
+  A : List String -> String -> String -> Element General
 
 attributes : (attrs : List (String, String)) -> String
 attributes attrs =
@@ -47,6 +47,10 @@ tag name attrs Nothing =
   "<" ++ name ++ " " ++ attributes attrs ++ "/>"
 tag name attrs (Just content) =
   "<" ++ name ++ " " ++ attributes attrs ++ ">" ++ content ++ "</" ++ name ++ ">"
+
+classAttrs : List String -> List (String, String)
+classAttrs [] = []
+classAttrs classes = [ ("class", unwords classes) ]
 
 mutual
   showEls : Show a => List a -> String
@@ -71,27 +75,24 @@ mutual
     show TextCss = "text/css"
 
   Show (Element InList) where
-    show (Li Nothing els) = tag "li" [] $ Just (showEls els)
-    show (Li (Just c) els) = tag "li" [ ("class", c) ] $ Just (showEls els)
+    show (Li classes els) = tag "li" (classAttrs classes) $ Just (showEls els)
 
   Show (Element General) where
     show (P els) = tag "p" [] $ Just (showEls els)
-    show (Div Nothing els) = tag "div" [] $ Just (showEls els)
-    show (Div (Just c) els) = tag "div" [ ("class", c) ] $ Just (showEls els)
-    show (Pre Nothing str) = tag "pre" [] $ Just str
-    show (Pre (Just c) str) = tag "pre" [ ("class", c) ] $ Just str
+    show (Div [] els) = tag "div" [] $ Just (showEls els)
+    show (Div classes els) = tag "div" (classAttrs classes) $ Just (showEls els)
+    show (Pre classes str) = tag "pre" (classAttrs classes) $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
     show (H1 str) = tag "h1" [] $ Just str
     show (H2 str) = tag "h2" [] $ Just str
     show (Ul _ []) = ""
-    show (Ul Nothing lis) = tag "ul" [] $ Just (showEls lis)
-    show (Ul (Just c) lis) = tag "ul" [ ("class", c) ] $ Just (showEls lis)
-    show (A href str) = tag "a" [ ("href", href) ] $ Just str
+    show (Ul classes lis) = tag "ul" (classAttrs classes) $ Just (showEls lis)
+    show (A classes href str) = tag "a" ( ("href", href) :: (classAttrs classes) ) $ Just str
 
 export
 li : String -> Element InList
-li str = Li Nothing [ Text str ]
+li str = Li [] [ Text str ]
 
 public export
 record Page where

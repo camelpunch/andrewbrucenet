@@ -16,12 +16,14 @@ menu =
   , blog
   ]
 
-htmlClass : HtmlClass -> Maybe String
-htmlClass Menu = Just "menu"
-htmlClass MenuItem = Just "menu-item"
+htmlClass : HtmlClass -> List String
+htmlClass Menu = ["menu"]
+htmlClass MenuItem = ["menu-item"]
 
 menuItem : Page -> Element InList
-menuItem page = Li (htmlClass MenuItem) [A (path page) (menuTitle page)]
+menuItem page = Li (htmlClass MenuItem) 
+                  [ A ["nohist"] (path page) (menuTitle page)
+                  ]
 
 assemblePage : Page -> List Page -> Element Root
 assemblePage page allPages =
@@ -32,11 +34,11 @@ assemblePage page allPages =
     , Link Stylesheet TextCss "/styles.css"
     ]
   , Body $
-    [ Div (Just "container")
+    [ Div ["container"]
       ( [ H1 $ title page
         , Ul (htmlClass Menu) (map menuItem allPages)
         ] ++ content page ++
-        [ P [ A "https://github.com/camelpunch/andrewbrucenet" "Source" ]
+        [ P [ A [] "https://github.com/camelpunch/andrewbrucenet" "Source" ]
         ]
       )
     ]

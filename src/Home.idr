@@ -11,7 +11,7 @@ home =
     ]
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
-  , Ul Nothing
+  , Ul []
     [ li "Test Driven Development (TDD)"
     , li "Pair programming and mentoring"
     , li "Complaining about what an Agile/XP team is(n't) doing"
@@ -23,7 +23,7 @@ home =
     , li "Go"
     ]
   , H2   "Things I wish people would pay me for"
-  , Ul Nothing
+  , Ul []
     [ li "Idris"
     , li "Haskell"
     , li "Elm"
@@ -32,8 +32,8 @@ home =
     ]
   , H2   "Current role"
   , P
-    [ Text "I'm employed as a software engineer for "
-    , A    "https://pivotal.io/" "Pivotal"
-    , Text ", currently on the CloudOps team."
+    [ Text      "I'm employed as a software engineer for "
+    , A []      "https://pivotal.io/" "Pivotal"
+    , Text      ", currently on the CloudOps team."
     ]
   ]

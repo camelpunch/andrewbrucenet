@@ -7,12 +7,12 @@ contact : Page
 contact =
   MkPage "/contact" "contact" "Contact" "Contact"
   [ H2 "Methods"
-  , P [ A "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
-  , P [ A "https://twitter.com/bruciemoose" "Twitter" ]
-  , P [ A "https://github.com/camelpunch" "GitHub" ]
+  , P [ A [] "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
+  , P [ A [] "https://twitter.com/bruciemoose" "Twitter" ]
+  , P [ A [] "https://github.com/camelpunch" "GitHub" ]
   , H2 "GPG Key"
   , P [ Text "For sending me encrypted email, files etc." ]
-  , Pre (Just "gibberish") """
+  , Pre ["gibberish"] """
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBFk3IwgBEADmcN5LyHZJjbdWk6aKnwRTamqdPjRglpc9J6FIFF9Lt0MI4CxW
