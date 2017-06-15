@@ -33,9 +33,12 @@ assemblePage page allPages =
     ]
   , Body $
     [ Div (Just "container")
-      ([ H1 $ title page
-       , Ul (htmlClass Menu) (map menuItem allPages)
-       ] ++ content page)
+      ( [ H1 $ title page
+        , Ul (htmlClass Menu) (map menuItem allPages)
+        ] ++ content page ++
+        [ P [ A "https://github.com/camelpunch/andrewbrucenet" "Source" ]
+        ]
+      )
     ]
   ]
 

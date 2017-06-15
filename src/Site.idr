@@ -22,6 +22,7 @@ data Element : ElementContext -> Type where
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
   Div : Maybe String -> List (Element General) -> Element General
+  Pre : Maybe String -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
   H1 : String -> Element General
@@ -77,6 +78,8 @@ mutual
     show (P els) = tag "p" [] $ Just (showEls els)
     show (Div Nothing els) = tag "div" [] $ Just (showEls els)
     show (Div (Just c) els) = tag "div" [ ("class", c) ] $ Just (showEls els)
+    show (Pre Nothing str) = tag "pre" [] $ Just str
+    show (Pre (Just c) str) = tag "pre" [ ("class", c) ] $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
     show (H1 str) = tag "h1" [] $ Just str
