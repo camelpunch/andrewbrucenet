@@ -1,73 +1,18 @@
-(ns net.andrewbruce.views
-  (:require [hiccup.page :refer [html5]]))
+module Contact
 
-(def menu-items
-  [["/" "Home"]
-   ["/cv" "CV"]
-   ["/contact" "Contact"]
-   ["http://blog.andrewbruce.net" "Blog"]])
+import Site
 
-(def menu
-  [:ul.menu (for [[href text] menu-items]
-              [:li.menu-item
-               [:a.nohist {:href href} text]])])
-
-(defn page [title & content]
-  (html5
-   [:head
-    [:link {:rel "Stylesheet" :type "text/css" :href "/normalize.css"}]
-    [:link {:rel "Stylesheet" :type "text/css" :href "/styles.css"}]
-    [:title title]]
-   [:body [:div.container
-           (first content)
-           menu
-           (rest content)
-           [:p [:a {:href "https://github.com/camelpunch/andrewbrucenet"} "Source"]]]]))
-
-(defn home []
-  (page "Andrew Bruce: London Software Developer"
-        [:h1 "A software person in London"]
-        [:p "Here is my face"]
-        [:img {:src "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"}]
-        [:h2 "Things people usually pay me for"]
-        [:ul
-         [:li "Test Driven Development (TDD)"]
-         [:li "Pair programming and mentoring"]
-         [:li "Complaining about what an Agile/XP team is(n't) doing"]
-         [:li "Working on CloudFoundry"]
-         [:li "Ruby"]
-         [:li "JavaScript"]
-         [:li "Objective-C"]
-         [:li "Swift"]
-         [:li "Go"]]
-        [:h2 "Things I wish people would pay me for"]
-        [:ul
-         [:li "Idris"]
-         [:li "Haskell"]
-         [:li "Elm"]
-         [:li "Clojure / ClojureScript"]
-         [:li "Teaching them anything I know from the comfort of my home"]]
-        [:h2 "Current role"]
-        [:p "I'm employed as a software engineer for "
-         [:a {:href "http://pivotal.io/"} "Pivotal"]
-         ", currently on the CloudOps team."]))
-
-(defn cv []
-  (page "Andrew Bruce: CV"
-        [:h1 "CV"]
-        [:p "I do plan to publish this incredibly interesting work myself one day. Until then there's "
-         [:a {:href "https://uk.linkedin.com/in/andrew-bruce-96098682"} "Linkedin"] ", which I'm about ready to quit (again)."]))
-
-(defn contact []
-  (page "Andrew Bruce: Contact"
-        [:h1 "Contact"]
-        [:h2 "Methods"]
-        [:p [:a {:href "mailto:me@andrewbruce.net"} "me@andrewbruce.net"]]
-        [:p [:a {:href "https://twitter.com/bruciemoose"} "Twitter"]]
-        [:p [:a {:href "https://github.com/camelpunch"} "GitHub"]]
-        [:h2 "GPG Key"]
-        [:p "For sending me encrypted email, files etc."]
-        [:pre.gibberish "
+export
+contact : Page
+contact =
+  MkPage "/contact/" "contact" "Contact" "Contact"
+  [ H2 "Methods"
+  , P [ A [] "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
+  , P [ A [] "https://twitter.com/bruciemoose" "Twitter" ]
+  , P [ A [] "https://github.com/camelpunch" "GitHub" ]
+  , H2 "GPG Key"
+  , P [ Text "For sending me encrypted email, files etc." ]
+  , Pre ["gibberish"] """
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBFk3IwgBEADmcN5LyHZJjbdWk6aKnwRTamqdPjRglpc9J6FIFF9Lt0MI4CxW
@@ -188,5 +133,5 @@ J+fjradiNU68EkzrwelTB8TM414xYpnwsJutxZA5XzpFv1K7D47eAfFWtyR9IEVt
 sUyq1VYdgnOhJoP91xFCFA==
 =25+t
 -----END PGP PUBLIC KEY BLOCK-----
-"])
-  )
+"""
+  ]
