@@ -4,6 +4,7 @@ import Site
 import Home
 import CV
 import Contact
+import Blog
 
 data HtmlClass = Menu | MenuItem
 
@@ -12,6 +13,7 @@ menu =
   [ home
   , cv
   , contact
+  , blog
   ]
 
 htmlClass : HtmlClass -> Maybe String
