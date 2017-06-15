@@ -5,8 +5,7 @@ import Home
 import CV
 import Contact
 import Blog
-
-data HtmlClass = Menu | MenuItem
+import Classes
 
 menu : List Page
 menu =
@@ -16,13 +15,9 @@ menu =
   , blog
   ]
 
-htmlClass : HtmlClass -> List String
-htmlClass Menu = ["menu"]
-htmlClass MenuItem = ["menu-item"]
-
 menuItem : Page -> Element InList
-menuItem page = Li (htmlClass MenuItem) 
-                  [ A ["nohist"] (path page) (menuTitle page)
+menuItem page = Li [MenuItem]
+                  [ A [NoHist] (path page) (menuTitle page)
                   ]
 
 assemblePage : Page -> List Page -> Element Root
@@ -34,11 +29,11 @@ assemblePage page allPages =
     , Link Stylesheet TextCss "/styles.css"
     ]
   , Body $
-    [ Div ["container"]
+    [ Div [Container]
       ( [ H1 $ title page
-        , Ul (htmlClass Menu) (map menuItem allPages)
+        , Ul [Menu] (map menuItem allPages)
         ] ++ content page ++
-        [ P [ A [] "https://github.com/camelpunch/andrewbrucenet" "Source" ]
+        [ P [ A noClass "https://github.com/camelpunch/andrewbrucenet" "Source" ]
         ]
       )
     ]

@@ -13,6 +13,22 @@ public export
 data LinkType = TextCss
 %name LinkType t
 
+export
+interface Show c => HtmlClass c
+
+public export
+Show a => HtmlClass a where
+
+data NoClass
+
+export
+noClass : List NoClass
+noClass = []
+
+export
+Show NoClass where
+  show _ = ""
+
 public export
 data Element : ElementContext -> Type where
   Html : List (Element RootChild) -> Element Root
@@ -21,15 +37,15 @@ data Element : ElementContext -> Type where
   Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
-  Div : List String -> List (Element General) -> Element General
-  Pre : List String -> String -> Element General
+  Div : HtmlClass c => List c -> List (Element General) -> Element General
+  Pre : HtmlClass c => List c -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
   H1 : String -> Element General
   H2 : String -> Element General
-  Ul : List String -> (List (Element InList)) -> Element General
-  Li : List String -> (List (Element General)) -> Element InList
-  A : List String -> String -> String -> Element General
+  Ul : HtmlClass c => List c -> (List (Element InList)) -> Element General
+  Li : HtmlClass c => List c -> (List (Element General)) -> Element InList
+  A : HtmlClass c => List c -> String -> String -> Element General
 
 attributes : (attrs : List (String, String)) -> String
 attributes attrs =
@@ -48,9 +64,9 @@ tag name attrs Nothing =
 tag name attrs (Just content) =
   "<" ++ name ++ " " ++ attributes attrs ++ ">" ++ content ++ "</" ++ name ++ ">"
 
-classAttrs : List String -> List (String, String)
+classAttrs : HtmlClass c => List c -> List (String, String)
 classAttrs [] = []
-classAttrs classes = [ ("class", unwords classes) ]
+classAttrs classes = [ ("class", unwords (map show classes)) ]
 
 mutual
   showEls : Show a => List a -> String
@@ -92,7 +108,7 @@ mutual
 
 export
 li : String -> Element InList
-li str = Li [] [ Text str ]
+li str = Li noClass [ Text str ]
 
 public export
 record Page where

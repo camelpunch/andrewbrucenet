@@ -1,18 +1,19 @@
 module Contact
 
 import Site
+import Classes
 
 export
 contact : Page
 contact =
   MkPage "/contact/" "contact" "Contact" "Contact"
   [ H2 "Methods"
-  , P [ A [] "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
-  , P [ A [] "https://twitter.com/bruciemoose" "Twitter" ]
-  , P [ A [] "https://github.com/camelpunch" "GitHub" ]
+  , P [ A noClass "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
+  , P [ A noClass "https://twitter.com/bruciemoose" "Twitter" ]
+  , P [ A noClass "https://github.com/camelpunch" "GitHub" ]
   , H2 "GPG Key"
   , P [ Text "For sending me encrypted email, files etc." ]
-  , Pre ["gibberish"] """
+  , Pre [Gibberish] """
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBFk3IwgBEADmcN5LyHZJjbdWk6aKnwRTamqdPjRglpc9J6FIFF9Lt0MI4CxW
