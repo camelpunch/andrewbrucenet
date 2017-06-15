@@ -88,7 +88,7 @@ mutual
 
 export
 li : String -> Element InList
-li str = Li Nothing [ P [ Text str ] ]
+li str = Li Nothing [ Text str ]
 
 public export
 record Page where
