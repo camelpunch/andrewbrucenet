@@ -5,7 +5,7 @@ import Site
 export
 cv : Page
 cv =
-  MkPage "/cv" "cv" "CV" "CV"
+  MkPage "/cv/" "cv" "CV" "CV"
   [ P
     [ Text $ "I do plan to publish this incredibly interesting work myself " ++
              "one day. Until then there's "

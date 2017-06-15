@@ -5,7 +5,7 @@ import Site
 export
 contact : Page
 contact =
-  MkPage "/contact" "contact" "Contact" "Contact"
+  MkPage "/contact/" "contact" "Contact" "Contact"
   [ H2 "Methods"
   , P [ A [] "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
   , P [ A [] "https://twitter.com/bruciemoose" "Twitter" ]
