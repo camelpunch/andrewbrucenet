@@ -49,7 +49,7 @@ data Element : ElementContext -> Type where
 
 attributes : (attrs : List (String, String)) -> String
 attributes attrs =
-  concat $ intersperse " " (map (\(k, v) => k ++ "=\"" ++ v ++ "\"") attrs)
+  unwords (map (\(k, v) => k ++ "=\"" ++ v ++ "\"") attrs)
 
 tag : (name : String) ->
       (attrs : List (String, String)) ->
