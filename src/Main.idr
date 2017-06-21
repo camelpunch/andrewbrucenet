@@ -7,7 +7,7 @@ import Contact
 import Blog
 import Classes
 
-menu : List Page
+menu : Vect 4 Page
 menu =
   [ home
   , cv
@@ -20,7 +20,7 @@ menuItem page = Li [MenuItem]
                   [ A [NoHist] (path page) (menuTitle page)
                   ]
 
-assemblePage : Page -> List Page -> Element Root
+assemblePage : Page -> Vect n Page -> Element Root
 assemblePage page allPages =
   Html $
   [ Head $

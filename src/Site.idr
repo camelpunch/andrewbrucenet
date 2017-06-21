@@ -1,6 +1,7 @@
 module Site
 
 import System
+import public Data.Vect
 
 public export
 data ElementContext = Root | RootChild | HeadChild | InList | General
@@ -43,7 +44,7 @@ data Element : ElementContext -> Type where
   Img : String -> Element General
   H1 : String -> Element General
   H2 : String -> Element General
-  Ul : HtmlClass c => List c -> (List (Element InList)) -> Element General
+  Ul : HtmlClass c => List c -> (Vect n (Element InList)) -> Element General
   Li : HtmlClass c => List c -> (List (Element General)) -> Element InList
   A : HtmlClass c => List c -> String -> String -> Element General
 
@@ -103,7 +104,7 @@ mutual
     show (H1 str) = tag "h1" [] $ Just str
     show (H2 str) = tag "h2" [] $ Just str
     show (Ul _ []) = ""
-    show (Ul classes lis) = tag "ul" (classAttrs classes) $ Just (showEls lis)
+    show (Ul classes lis) = tag "ul" (classAttrs classes) $ Just (showEls $ toList lis)
     show (A classes href str) = tag "a" ( ("href", href) :: (classAttrs classes) ) $ Just str
 
 export
@@ -123,11 +124,11 @@ html : Element Root -> String
 html (Html els) = "<!DOCTYPE html>" ++ (tag "html" [] $ Just (showEls els))
 
 export
-generate : (Page -> List Page -> Element Root) ->
-           List Page ->
+generate : (Page -> Vect n Page -> Element Root) ->
+           Vect n Page ->
            List String ->
            IO ()
-generate assemblePage pages args =
+generate {n} assemblePage pages args =
   case args of
     []            => die $ "must provide a page: " ++ (concat $ intersperse ", " (map filepath pages))
     [_, pageName] => generatePage pageName pages
@@ -138,10 +139,10 @@ generate assemblePage pages args =
       fPutStrLn stderr msg
       exitFailure
 
-    pagesWithName : String -> List Page -> List Page
-    pagesWithName name pages = filter (\p => filepath p == name) pages
+    pagesWithName : String -> Vect n Page -> List Page
+    pagesWithName name pages = filter (\p => filepath p == name) $ toList pages
 
-    generatePage : String -> List Page -> IO ()
+    generatePage : String -> Vect n Page -> IO ()
     generatePage pageName pages =
       case pagesWithName pageName pages of
         []     => die "couldn't find a matching page"
