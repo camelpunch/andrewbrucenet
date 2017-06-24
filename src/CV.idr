@@ -1,7 +1,6 @@
 module CV
 
 import Site
-import Classes
 import CVGenerator
 
 export
