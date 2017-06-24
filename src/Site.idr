@@ -44,6 +44,9 @@ data Element : ElementContext -> Type where
   Img : String -> Element General
   H1 : String -> Element General
   H2 : String -> Element General
+  H3 : String -> Element General
+  H4 : String -> Element General
+  H5 : String -> Element General
   Ul : HtmlClass c => List c -> (Vect n (Element InList)) -> Element General
   Li : HtmlClass c => List c -> (List (Element General)) -> Element InList
   A : HtmlClass c => List c -> String -> String -> Element General
@@ -101,11 +104,16 @@ mutual
     show (Pre classes str) = tag "pre" (classAttrs classes) $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
-    show (H1 str) = tag "h1" [] $ Just str
-    show (H2 str) = tag "h2" [] $ Just str
+    show (H1 str) = heading "h1" str
+    show (H2 str) = heading "h2" str
+    show (H3 str) = heading "h3" str
+    show (H4 str) = heading "h4" str
+    show (H5 str) = heading "h5" str
     show (Ul _ []) = ""
     show (Ul classes lis) = tag "ul" (classAttrs classes) $ Just (showEls $ toList lis)
     show (A classes href str) = tag "a" ( ("href", href) :: (classAttrs classes) ) $ Just str
+  heading : String -> String -> String
+  heading name str = tag name [] $ Just str
 
 export
 li : String -> Element InList
