@@ -34,11 +34,17 @@ Show Date where
   show (December year) = "Dec " ++ show year
 
 public export
-data ToDate = Just Date | Present
+data ToDate = To Date | Present
 
 Show ToDate where
-  show (Just d) = show d
+  show (To d) = show d
   show Present = "Present"
+
+public export
+data DateRange = From Date ToDate
+
+Show DateRange where
+  show (From from to) = show from ++ "–" ++ show to
 
 export
 record Position where
@@ -46,8 +52,7 @@ record Position where
   title : String
   company : String
   location : String
-  from : Date
-  to : ToDate
+  period : DateRange
 
 %name Position position, position1
 
@@ -58,8 +63,7 @@ record Course where
   qualification : String
   field : String
   grade : String
-  from : Date
-  to : Maybe Date
+  period : DateRange
 
 %name Course course, course1
 
@@ -67,17 +71,19 @@ export
 record Document where
   constructor MkDocument
   experience : Vect (S n) Position
-  education : Vect (S n) Course
+  education : Vect (S m) Course
 
 %name Document doc
+
+htmlPeriod : DateRange -> Element General
+htmlPeriod range = P [ Text $ show range ]
 
 experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
   Li noClass
      [ H3 $ title position
      , H4 $ company position
-     , P [ Text $ show (from position) ++ " - " ++ show (to position)
-         ]
+     , htmlPeriod $ period position
      ] :: []
 experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 
@@ -85,7 +91,8 @@ educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
   Li noClass
      [ H3 $ school course
-     , H4 $ qualification course ++ ", " ++ field course
+     , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
+     , htmlPeriod $ period course
      ] :: []
 educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
 
