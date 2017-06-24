@@ -53,6 +53,7 @@ record Position where
   company : String
   location : String
   period : DateRange
+  description : String
 
 %name Position position, position1
 
@@ -64,6 +65,7 @@ record Course where
   field : String
   grade : String
   period : DateRange
+  description : String
 
 %name Course course, course1
 
