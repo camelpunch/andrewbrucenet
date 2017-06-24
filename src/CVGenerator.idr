@@ -5,28 +5,33 @@ import Data.Vect
 import Site
 
 public export
-data Month = January | February | March
-           | April   | May      | June
-           | July    | August   | September
-           | October | November | December
-%name Month month
-
-public export
-data Date = MkDate Month Integer
+data Date
+  = January Integer
+  | February Integer
+  | March Integer
+  | April Integer
+  | May Integer
+  | June Integer
+  | July Integer
+  | August Integer
+  | September Integer
+  | October Integer
+  | November Integer
+  | December Integer
 
 Show Date where
-  show (MkDate January year) = "Jan " ++ show year
-  show (MkDate February year) = "Feb " ++ show year
-  show (MkDate March year) = "Mar " ++ show year
-  show (MkDate April year) = "Apr " ++ show year
-  show (MkDate May year) = "May " ++ show year
-  show (MkDate June year) = "Jun " ++ show year
-  show (MkDate July year) = "Jul " ++ show year
-  show (MkDate August year) = "Aug " ++ show year
-  show (MkDate September year) = "Sep " ++ show year
-  show (MkDate October year) = "Oct " ++ show year
-  show (MkDate November year) = "Nov " ++ show year
-  show (MkDate December year) = "Dec " ++ show year
+  show (January year) = "Jan " ++ show year
+  show (February year) = "Feb " ++ show year
+  show (March year) = "Mar " ++ show year
+  show (April year) = "Apr " ++ show year
+  show (May year) = "May " ++ show year
+  show (June year) = "Jun " ++ show year
+  show (July year) = "Jul " ++ show year
+  show (August year) = "Aug " ++ show year
+  show (September year) = "Sep " ++ show year
+  show (October year) = "Oct " ++ show year
+  show (November year) = "Nov " ++ show year
+  show (December year) = "Dec " ++ show year
 
 public export
 data ToDate = Just Date | Present
@@ -79,7 +84,8 @@ experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
   Li noClass
-     [ H3 $ qualification course ++ " " ++ field course ++ " at " ++ school course
+     [ H3 $ school course
+     , H4 $ qualification course ++ ", " ++ field course
      ] :: []
 educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
 

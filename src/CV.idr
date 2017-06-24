@@ -11,15 +11,15 @@ cv =
   [ CVGenerator.cv $ MkDocument
     [ MkPosition "Senior Software Engineer"
                  "Pivotal"
-                                 "London / San Francisco"
-                                 (MkDate January 2012)
-                                 Present
+                 "London / San Francisco"
+                 (January 2012)
+                 Present
     ]
     [ MkCourse   "University of Cambridge"
                  "BA"
                  "Philosophy"
                  "2:2"
-                 (MkDate October 2002)
-                 (Just $ MkDate July 2005)
+                 (October 2002)
+                 (Just $ July 2005)
     ]
   ]
