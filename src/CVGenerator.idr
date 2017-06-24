@@ -82,20 +82,22 @@ htmlPeriod range = P [ Text $ show range ]
 
 experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
-  Li noClass
-     [ H3 $ title position
-     , H4 $ company position
-     , htmlPeriod $ period position
-     ] :: []
+  [ Li noClass
+    [ H3 $ title position
+    , H4 $ company position
+    , htmlPeriod $ period position
+    ]
+  ]
 experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
-  Li noClass
-     [ H3 $ school course
-     , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
-     , htmlPeriod $ period course
-     ] :: []
+  [ Li noClass
+    [ H3 $ school course
+    , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
+    , htmlPeriod $ period course
+    ]
+  ]
 educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
 
 export
