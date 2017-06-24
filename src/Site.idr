@@ -77,7 +77,7 @@ mutual
   showEls = concat . map show
 
   Show (Element RootChild) where
-    show (Head content) = tag "head" [] $ Just (showEls content)
+    show (Head content) = "<head><meta charset=\"utf-8\">" ++ showEls content ++ "</head>"
     show (Body content) = tag "body" [] $ Just (showEls content)
 
   Show (Element HeadChild) where
