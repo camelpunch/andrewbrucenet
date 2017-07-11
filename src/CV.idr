@@ -15,10 +15,10 @@ cv =
       (From (January 2012) Present)
       """Full-time TDD and pairing (remote / local). Variety of team sizes and types.
 
-Labs: consulting large enterprise clients and startups. Leading small and large teams.
+Current team: Cloud Operations. Deploying, operating and monitoring Pivotal Cloud Foundry on Google Cloud Platform.
 Cloud Foundry: Pivotal Web Services, CLI, docs tooling team, CF services.
 RabbitMQ core team: Objective-C/Swift client, RabbitMQ server.
-Current team: Cloud Operations. Running Cloud Foundry on Google Cloud Platform.
+Labs: consulting large enterprise clients and startups. Leading small and large teams.
 
 Languages in production: Ruby, JavaScript, Go, Objective-C, Swift, Erlang, Elixir.
 Languages for prototypes: Clojure, Haskell.
