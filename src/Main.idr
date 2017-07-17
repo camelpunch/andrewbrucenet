@@ -25,8 +25,8 @@ assemblePage page allPages =
   Html $
   [ Head $
     [ Title $ "Andrew Bruce: " ++ title page
-    , Link Stylesheet TextCss "/normalize.css"
-    , Link Stylesheet TextCss "/styles.css"
+    , Link [ Rel Stylesheet, LinkType TextCss, Href "/normalize.css"]
+    , Link [ Rel Stylesheet, LinkType TextCss, Href "/styles.css"]
     ]
   , Body $
     [ Div [Container]

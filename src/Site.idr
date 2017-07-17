@@ -7,12 +7,12 @@ public export
 data ElementContext = Root | RootChild | HeadChild | InList | General
 
 public export
-data LinkRel = Stylesheet
-%name LinkRel rel
+data RelValue = Stylesheet
+%name RelValue rel
 
 public export
-data LinkType = TextCss
-%name LinkType t
+data LinkTypeValue = TextCss
+%name LinkTypeValue t
 
 export
 interface Show c => HtmlClass c
@@ -29,13 +29,22 @@ noClass = []
 export
 Show NoClass where
   show _ = ""
+  
+public export
+data AttributeContext = InLink
+
+public export
+data Attribute : AttributeContext -> Type where
+  Rel : RelValue -> Attribute InLink
+  LinkType : LinkTypeValue -> Attribute InLink
+  Href : String -> Attribute InLink
 
 public export
 data Element : ElementContext -> Type where
   Html : List (Element RootChild) -> Element Root
   Head : List (Element HeadChild) -> Element RootChild
   Title : String -> Element HeadChild
-  Link : LinkRel -> LinkType -> (href : String) -> Element HeadChild
+  Link : List (Attribute InLink) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
   Div : HtmlClass c => List c -> List (Element General) -> Element General
@@ -73,6 +82,12 @@ classAttrs [] = []
 classAttrs classes = [ ("class", unwords (map show classes)) ]
 
 mutual
+  attributify : (attrs : List (Attribute InLink)) -> List (String, String)
+  attributify [] = []
+  attributify (Rel rel :: xs) = ("rel", show rel) :: attributify xs
+  attributify (LinkType t :: xs) = ("type", show t) :: attributify xs
+  attributify (Href href :: xs) = ("href", href) :: attributify xs
+
   showEls : Show a => List a -> String
   showEls = concat . map show
 
@@ -81,17 +96,13 @@ mutual
     show (Body content) = tag "body" [] $ Just (showEls content)
 
   Show (Element HeadChild) where
-    show (Link rel t href) = tag "link" [ ("rel", show rel)
-                                        , ("type", show t)
-                                        , ("href", href)
-                                        ]
-                                        Nothing
+    show (Link attrs) = tag "link" (attributify attrs) Nothing
     show (Title str) = tag "title" [] $ Just str
 
-  Show LinkRel where
+  Show RelValue where
     show Stylesheet = "Stylesheet"
 
-  Show LinkType where
+  Show LinkTypeValue where
     show TextCss = "text/css"
 
   Show (Element InList) where
