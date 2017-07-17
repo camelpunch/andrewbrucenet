@@ -12,7 +12,7 @@ home =
     ]
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
-  , Ul noClass
+  , Ul []
     [ Li noClass [ Text "Test Driven Development (TDD)" ]
     , Li noClass [ Text "Pair programming and mentoring" ]
     , Li noClass [ Text "Complaining about what an Agile/XP team is(n't) doing" ]
@@ -24,7 +24,7 @@ home =
     , Li noClass [ Text "Go" ]
     ]
   , H2   "Things I wish people would pay me for"
-  , Ul noClass
+  , Ul []
     [ Li noClass [ Text "Idris" ]
     , Li noClass [ Text "Haskell" ]
     , Li noClass [ Text "Elm" ]

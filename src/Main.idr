@@ -20,7 +20,7 @@ menuItem page = Li [MenuItem]
                   [ A [NoHist] (path page) (menuTitle page)
                   ]
 
-assemblePage : Page -> Vect n Page -> Element Root
+assemblePage : Page -> Vect (S n) Page -> Element Root
 assemblePage page allPages =
   Html $
   [ Head $
@@ -31,7 +31,7 @@ assemblePage page allPages =
   , Body $
     [ Div [Container]
       ( [ H1 $ title page
-        , Ul [Menu] (map menuItem allPages)
+        , Ul [Classes [Menu]] (map menuItem allPages)
         ] ++ content page ++
         [ P [ A noClass "https://github.com/camelpunch/andrewbrucenet" "Source" ]
         ]

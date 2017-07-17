@@ -112,7 +112,7 @@ export
 cv : Document -> Element General
 cv (MkDocument experience education) =
   Div noClass [ H2 "Experience"
-              , Ul noClass $ experienceLis experience
+              , Ul [] $ experienceLis experience
               , H2 "Education"
-              , Ul noClass $ educationLis education
+              , Ul [] $ educationLis education
               ]
