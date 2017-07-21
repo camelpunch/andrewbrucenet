@@ -28,7 +28,7 @@ assemblePage page allPages =
     , Link [] [Rel Stylesheet, LinkType TextCss, Href "/styles.css"]
     ]
   , Body $
-    [ Div [Container]
+    [ Div [Classes [Container]]
       ( [ H1 $ title page
         , Ul [Classes [Menu]] (map menuItem allPages)
         ] ++ content page ++

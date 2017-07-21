@@ -111,8 +111,8 @@ educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
 export
 cv : Document -> Element General
 cv (MkDocument experience education) =
-  Div noClass [ H2 "Experience"
-              , Ul [] $ experienceLis experience
-              , H2 "Education"
-              , Ul [] $ educationLis education
-              ]
+  Div [] [ H2 "Experience"
+         , Ul [] $ experienceLis experience
+         , H2 "Education"
+         , Ul [] $ educationLis education
+         ]

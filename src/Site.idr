@@ -48,7 +48,7 @@ data Element : ElementContext -> Type where
   Link : List (Attribute AttrGeneral) -> List (Attribute AttrInLink) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
-  Div : HtmlClass c => List c -> List (Element General) -> Element General
+  Div : List (Attribute AttrGeneral) -> List (Element General) -> Element General
   Pre : HtmlClass c => List c -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
@@ -115,8 +115,7 @@ mutual
 
   Show (Element General) where
     show (P els) = tag "p" [] $ Just (showEls els)
-    show (Div [] els) = tag "div" [] $ Just (showEls els)
-    show (Div classes els) = tag "div" (classAttrs classes) $ Just (showEls els)
+    show (Div attrs els) = tag "div" (attributify attrs) $ Just (showEls els)
     show (Pre classes str) = tag "pre" (classAttrs classes) $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
