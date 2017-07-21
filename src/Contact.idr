@@ -13,7 +13,7 @@ contact =
   , P [ A [] [Href "https://github.com/camelpunch"] "GitHub" ]
   , H2 "GPG Key"
   , P [ Text "For sending me encrypted email, files etc." ]
-  , Pre [Gibberish] """
+  , Pre [Classes [Gibberish]] """
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBFk3IwgBEADmcN5LyHZJjbdWk6aKnwRTamqdPjRglpc9J6FIFF9Lt0MI4CxW
