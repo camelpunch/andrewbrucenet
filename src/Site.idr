@@ -45,7 +45,7 @@ data Element : ElementContext -> Type where
   Html : List (Element RootChild) -> Element Root
   Head : List (Element HeadChild) -> Element RootChild
   Title : String -> Element HeadChild
-  Link : List (Attribute AttrInLink) -> Element HeadChild
+  Link : List (Attribute AttrGeneral) -> List (Attribute AttrInLink) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
   P : List (Element General) -> Element General
   Div : HtmlClass c => List c -> List (Element General) -> Element General
@@ -101,7 +101,7 @@ mutual
     show (Body content) = tag "body" [] $ Just (showEls content)
 
   Show (Element HeadChild) where
-    show (Link attrs) = tag "link" (attributify attrs) Nothing
+    show (Link attrs linkAttrs) = tag "link" (attributify attrs ++ attributify linkAttrs) Nothing
     show (Title str) = tag "title" [] $ Just str
 
   Show RelValue where
