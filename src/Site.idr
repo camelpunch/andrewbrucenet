@@ -59,7 +59,7 @@ data Element : ElementContext -> Type where
   H5 : String -> Element General
   Ul : List (Attribute AttrGeneral) -> (Vect (S n) (Element InList)) -> Element General
   Li : List (Attribute AttrGeneral) -> (List (Element General)) -> Element InList
-  A : HtmlClass c => List c -> String -> String -> Element General
+  A : List (Attribute AttrGeneral) -> List (Attribute AttrInLink) -> String -> Element General
 
 attributes : (attrs : List (String, String)) -> String
 attributes attrs =
@@ -126,7 +126,7 @@ mutual
     show (H4 str) = heading "h4" str
     show (H5 str) = heading "h5" str
     show (Ul attrs lis) = tag "ul" (attributify attrs) $ Just (showEls $ toList lis)
-    show (A classes href str) = tag "a" ( ("href", href) :: (classAttrs classes) ) $ Just str
+    show (A attrs aAttrs str) = tag "a" (attributify attrs ++ attributify aAttrs) $ Just str
   heading : String -> String -> String
   heading name str = tag name [] $ Just str
 

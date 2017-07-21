@@ -8,9 +8,9 @@ contact : Page
 contact =
   MkPage "/contact/" "contact" "Contact" "Contact"
   [ H2 "Methods"
-  , P [ A noClass "mailto:me@andrewbruce.net" "me@andrewbruce.net" ]
-  , P [ A noClass "https://twitter.com/bruciemoose" "Twitter" ]
-  , P [ A noClass "https://github.com/camelpunch" "GitHub" ]
+  , P [ A [] [Href "mailto:me@andrewbruce.net"] "me@andrewbruce.net" ]
+  , P [ A [] [Href "https://twitter.com/bruciemoose"] "Twitter" ]
+  , P [ A [] [Href "https://github.com/camelpunch"] "GitHub" ]
   , H2 "GPG Key"
   , P [ Text "For sending me encrypted email, files etc." ]
   , Pre [Gibberish] """

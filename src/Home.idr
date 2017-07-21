@@ -33,8 +33,8 @@ home =
     ]
   , H2   "Current role"
   , P
-    [ Text      "I'm employed as a software engineer for "
-    , A noClass "https://pivotal.io/" "Pivotal"
-    , Text      ", currently on the CloudOps team."
+    [ Text "I'm employed as a software engineer for "
+    , A    [] [Href "https://pivotal.io/"] "Pivotal"
+    , Text ", currently on the CloudOps team."
     ]
   ]
