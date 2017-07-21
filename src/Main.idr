@@ -16,7 +16,7 @@ menu =
   ]
 
 menuItem : Page -> Element InList
-menuItem page = Li [MenuItem]
+menuItem page = Li [Classes [MenuItem]]
                   [ A [NoHist] (path page) (menuTitle page)
                   ]
 

@@ -88,7 +88,7 @@ toParas text = map strPara $ filter (/= "") (lines text)
 
 experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
-  [ Li noClass $
+  [ Li [] $
     [ H3 $ title position
     , H4 $ company position
     , showPara $ period position
@@ -100,7 +100,7 @@ experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
-  [ Li noClass
+  [ Li []
     [ H3 $ school course
     , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
     , showPara $ period course

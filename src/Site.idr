@@ -58,7 +58,7 @@ data Element : ElementContext -> Type where
   H4 : String -> Element General
   H5 : String -> Element General
   Ul : List (Attribute AttrGeneral) -> (Vect (S n) (Element InList)) -> Element General
-  Li : HtmlClass c => List c -> (List (Element General)) -> Element InList
+  Li : List (Attribute AttrGeneral) -> (List (Element General)) -> Element InList
   A : HtmlClass c => List c -> String -> String -> Element General
 
 attributes : (attrs : List (String, String)) -> String
@@ -111,7 +111,7 @@ mutual
     show TextCss = "text/css"
 
   Show (Element InList) where
-    show (Li classes els) = tag "li" (classAttrs classes) $ Just (showEls els)
+    show (Li attrs els) = tag "li" (attributify attrs) $ Just (showEls els)
 
   Show (Element General) where
     show (P els) = tag "p" [] $ Just (showEls els)
@@ -132,7 +132,7 @@ mutual
 
 export
 li : String -> Element InList
-li str = Li noClass [ Text str ]
+li str = Li [] [ Text str ]
 
 public export
 record Page where
