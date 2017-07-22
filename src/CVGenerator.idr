@@ -95,7 +95,6 @@ experienceLis (position :: []) =
     , strPara $ location position
     ] ++ (toParas (description position))
   ]
-
 experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
