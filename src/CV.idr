@@ -6,19 +6,21 @@ import CVGenerator
 export
 cv : Page
 cv =
-  MkPage "/cv/" "cv" "CV" "CV"
+  MkPage "/cv/" "cv" "CV" "Andrew Bruce"
   [ CVGenerator.cv $ MkDocument
     [ MkPosition
       "Senior Software Engineer"
       "Pivotal"
       "London / San Francisco"
       (From (January 2012) Present)
-      """Full-time TDD and pairing (remote / local). Variety of team sizes and types. Interviewing new recruits at all stages.
+      """Full-time TDD & pairing: both remote and local. Variety of team sizes and types. Interviewing new recruits at all stages.
 
-Current team: Cloud Operations. Deploying, operating and monitoring Pivotal Cloud Foundry on Google Cloud Platform.
-Cloud Foundry: Pivotal Web Services, CLI, docs tooling team, CF services.
-RabbitMQ core team: Objective-C/Swift client, RabbitMQ server.
-Labs: consulting large enterprise clients and startups. Leading small and large teams.
+Current Team:
+Cloud Operations. Deploying, operating and monitoring Pivotal Cloud Foundry on Google Cloud Platform.
+
+Previous Teams:
+RabbitMQ core team, Pivotal Web Services, CloudFoundry CLI, docs tooling, CF services.
+(also prior: several teams consulting large clients & startups. Leading small and large teams.
 
 Languages in production: Ruby, JavaScript, Go, Objective-C, Swift, Erlang, Elixir.
 Languages for prototypes: Clojure, Haskell.
