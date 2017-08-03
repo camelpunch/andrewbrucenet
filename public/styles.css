@@ -8,7 +8,11 @@
     display: block;
 }
 @media print {
-    .menu {
+    .container {
+	margin: 0 1em;
+	max-width: none;
+    }
+    .noprint {
 	display: none;
     }
 }
@@ -35,7 +39,7 @@
 }
 .cv-item {
     list-style-type: none;
-    padding: 0 0 1em 0
+    padding: 0 0 0.5em 0
 }
 a.nohist:link,
 a.nohist:visited {

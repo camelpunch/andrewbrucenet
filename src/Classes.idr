@@ -9,6 +9,7 @@ data ABClass
   | MenuItem
   | Menu
   | NoHist
+  | NoPrint
 
 public export
 Show ABClass where
@@ -17,4 +18,4 @@ Show ABClass where
   show MenuItem = "menu-item"
   show Menu = "menu"
   show NoHist = "nohist"
-
+  show NoPrint = "noprint"
