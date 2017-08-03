@@ -7,6 +7,11 @@
     padding: 0;
     display: block;
 }
+@media print {
+    .menu {
+	display: none;
+    }
+}
 .menu-item {
     list-style-type: none;
     padding-left: 0;
@@ -17,13 +22,20 @@
     padding-right: 12px;
     font-size: 150%;
 }
-@media (max-width: 1000px) {
+@media not print and (max-width: 1000px) {
     .menu-item a {
         padding-right: 45px;
     }
     .container {
         font-size: 270%;
     }
+}
+.cv-section {
+    padding: 0;
+}
+.cv-item {
+    list-style-type: none;
+    padding: 1em 0 0 0
 }
 a.nohist:link,
 a.nohist:visited {

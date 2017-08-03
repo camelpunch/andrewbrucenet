@@ -86,9 +86,17 @@ showPara = strPara . show
 toParas : String -> List (Element General)
 toParas text = map strPara $ filter (/= "") (lines text)
 
+data CVClass
+  = NoBullet
+  | NoListIndent
+
+Show CVClass where
+  show NoBullet = "cv-item"
+  show NoListIndent = "cv-section"
+
 experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
-  [ Li [] $
+  [ Li [Classes [NoBullet]] $
     [ H3 $ title position
     , H4 $ company position
     , showPara $ period position
@@ -99,7 +107,7 @@ experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
-  [ Li []
+  [ Li [Classes [NoBullet]]
     [ H3 $ school course
     , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
     , showPara $ period course
@@ -111,7 +119,7 @@ export
 cv : Document -> Element General
 cv (MkDocument experience education) =
   Div [] [ H2 "Experience"
-         , Ul [] $ experienceLis experience
+         , Ul [Classes [NoListIndent]] $ experienceLis experience
          , H2 "Education"
-         , Ul [] $ educationLis education
+         , Ul [Classes [NoListIndent]] $ educationLis education
          ]
