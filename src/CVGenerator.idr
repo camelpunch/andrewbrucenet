@@ -44,7 +44,7 @@ public export
 data DateRange = From Date ToDate
 
 Show DateRange where
-  show (From from to) = show from ++ "–" ++ show to
+  show (From from to) = show from ++ " to " ++ show to
 
 export
 record Position where
@@ -98,9 +98,7 @@ experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
   [ Li [Classes [NoBullet]] $
     [ H3 $ title position
-    , H4 $ company position
-    , showPara $ period position
-    , strPara $ location position
+    , H4 $ company position ++ " (" ++ location position ++ ", " ++ show (period position) ++ ")"
     ] ++ (toParas (description position))
   ]
 experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
