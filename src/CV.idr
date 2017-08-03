@@ -7,7 +7,8 @@ export
 cv : Page
 cv =
   MkPage "/cv/" "cv" "CV" "Andrew Bruce"
-  [ CVGenerator.cv $ MkDocument
+  [ P [] [ Text "me@andrewbruce.net / +447864303876"]
+  , CVGenerator.cv $ MkDocument
     [ MkPosition
       "Senior Software Engineer"
       "Pivotal"
