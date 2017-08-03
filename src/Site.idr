@@ -47,7 +47,7 @@ data Element : ElementContext -> Type where
   Title : String -> Element HeadChild
   Link : List (Attribute AttrGeneral) -> List (Attribute AttrInLink) -> Element HeadChild
   Body : List (Element General) -> Element RootChild
-  P : List (Element General) -> Element General
+  P : List (Attribute AttrGeneral) -> List (Element General) -> Element General
   Div : List (Attribute AttrGeneral) -> List (Element General) -> Element General
   Pre : List (Attribute AttrGeneral) -> String -> Element General
   Text : String -> Element General
@@ -114,7 +114,7 @@ mutual
     show (Li attrs els) = tag "li" (attributify attrs) $ Just (showEls els)
 
   Show (Element General) where
-    show (P els) = tag "p" [] $ Just (showEls els)
+    show (P attrs els) = tag "p" (attributify attrs) $ Just (showEls els)
     show (Div attrs els) = tag "div" (attributify attrs) $ Just (showEls els)
     show (Pre attrs str) = tag "pre" (attributify attrs) $ Just str
     show (Text str) = str

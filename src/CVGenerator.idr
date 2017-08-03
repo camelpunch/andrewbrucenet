@@ -78,7 +78,7 @@ record Document where
 %name Document doc
 
 strPara : String -> Element General
-strPara str = P [ Text $ str ]
+strPara str = P [] [ Text $ str ]
 
 showPara : Show a => a -> Element General
 showPara = strPara . show

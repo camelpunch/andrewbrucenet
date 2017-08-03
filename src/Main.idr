@@ -32,7 +32,7 @@ assemblePage page allPages =
       ( [ H1 $ title page
         , Ul [Classes [Menu]] (map menuItem allPages)
         ] ++ content page ++
-        [ P [ A [] [Href "https://github.com/camelpunch/andrewbrucenet"] "Source" ]
+        [ P [] [ A [] [Href "https://github.com/camelpunch/andrewbrucenet"] "Source" ]
         ]
       )
     ]

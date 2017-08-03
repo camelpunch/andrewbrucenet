@@ -8,8 +8,8 @@ home : Page
 home =
   MkPage "/" "index" "Home" "A software person in London"
   [ P
-    [ Text "Here is my face"
-    ]
+    []
+    [ Text "Here is my face" ]
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
   , H2   "Things people usually pay me for"
   , Ul []
@@ -33,6 +33,7 @@ home =
     ]
   , H2   "Current role"
   , P
+    []
     [ Text "I'm employed as a software engineer for "
     , A    [] [Href "https://pivotal.io/"] "Pivotal"
     , Text ", currently on the CloudOps team."
