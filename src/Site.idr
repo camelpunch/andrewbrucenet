@@ -42,11 +42,11 @@ data Element : ElementContext -> Type where
   Pre : List (Attribute AttrGeneral) -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
-  H1 : String -> Element General
-  H2 : String -> Element General
-  H3 : String -> Element General
-  H4 : String -> Element General
-  H5 : String -> Element General
+  H1 : List (Attribute AttrGeneral) -> String -> Element General
+  H2 : List (Attribute AttrGeneral) -> String -> Element General
+  H3 : List (Attribute AttrGeneral) -> String -> Element General
+  H4 : List (Attribute AttrGeneral) -> String -> Element General
+  H5 : List (Attribute AttrGeneral) -> String -> Element General
   Ul : List (Attribute AttrGeneral) -> (Vect (S n) (Element InList)) -> Element General
   Li : List (Attribute AttrGeneral) -> (List (Element General)) -> Element InList
   A : List (Attribute AttrGeneral) -> List (Attribute AttrInLink) -> String -> Element General
@@ -109,15 +109,13 @@ mutual
     show (Pre attrs str) = tag "pre" (attributify attrs) $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
-    show (H1 str) = heading "h1" str
-    show (H2 str) = heading "h2" str
-    show (H3 str) = heading "h3" str
-    show (H4 str) = heading "h4" str
-    show (H5 str) = heading "h5" str
+    show (H1 attrs str) = tag "h1" (attributify attrs) $ Just str
+    show (H2 attrs str) = tag "h2" (attributify attrs) $ Just str
+    show (H3 attrs str) = tag "h3" (attributify attrs) $ Just str
+    show (H4 attrs str) = tag "h4" (attributify attrs) $ Just str
+    show (H5 attrs str) = tag "h5" (attributify attrs) $ Just str
     show (Ul attrs lis) = tag "ul" (attributify attrs) $ Just (showEls $ toList lis)
     show (A attrs aAttrs str) = tag "a" (attributify attrs ++ attributify aAttrs) $ Just str
-  heading : String -> String -> String
-  heading name str = tag name [] $ Just str
 
 export
 li : String -> Element InList

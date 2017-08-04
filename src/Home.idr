@@ -11,7 +11,7 @@ home =
     []
     [ Text "Here is my face" ]
   , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
-  , H2   "Things people usually pay me for"
+  , H2 [] "Things people usually pay me for"
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
     , Li [] [ Text "Pair programming and mentoring" ]
@@ -23,7 +23,7 @@ home =
     , Li [] [ Text "Swift" ]
     , Li [] [ Text "Go" ]
     ]
-  , H2   "Things I wish people would pay me for"
+  , H2 [] "Things I wish people would pay me for"
   , Ul []
     [ Li [] [ Text "Idris" ]
     , Li [] [ Text "Haskell" ]
@@ -31,7 +31,7 @@ home =
     , Li [] [ Text "Clojure / ClojureScript" ]
     , Li [] [ Text "Teaching them anything I know from the comfort of my home" ]
     ]
-  , H2   "Current role"
+  , H2 [] "Current role"
   , P
     []
     [ Text "I'm employed as a software engineer for "

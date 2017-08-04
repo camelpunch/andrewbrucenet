@@ -97,8 +97,8 @@ Show CVClass where
 experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
 experienceLis (position :: []) =
   [ Li [Classes [NoBullet]] $
-    [ H3 $ title position
-    , H4 $ company position ++ " (" ++ location position ++ ", " ++ show (period position) ++ ")"
+    [ H3 [] $ title position
+    , H4 [] $ company position ++ " (" ++ location position ++ ", " ++ show (period position) ++ ")"
     ] ++ (toParas (description position))
   ]
 experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
@@ -106,8 +106,8 @@ experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
 educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
 educationLis (course :: []) =
   [ Li [Classes [NoBullet]]
-    [ H3 $ school course
-    , H4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
+    [ H3 [] $ school course
+    , H4 [] $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
     , showPara $ period course
     ]
   ]
@@ -116,8 +116,8 @@ educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
 export
 cv : Document -> Element General
 cv (MkDocument experience education) =
-  Div [] [ H2 "Experience"
+  Div [] [ H2 [] "Experience"
          , Ul [Classes [NoListIndent]] $ experienceLis experience
-         , H2 "Education"
+         , H2 [] "Education"
          , Ul [Classes [NoListIndent]] $ educationLis education
          ]

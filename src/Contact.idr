@@ -7,11 +7,11 @@ export
 contact : Page
 contact =
   MkPage "/contact/" "contact" "Contact" "Contact"
-  [ H2 "Methods"
+  [ H2 [] "Methods"
   , P [] [ A [] [Href "mailto:me@andrewbruce.net"] "me@andrewbruce.net" ]
   , P [] [ A [] [Href "https://twitter.com/bruciemoose"] "Twitter" ]
   , P [] [ A [] [Href "https://github.com/camelpunch"] "GitHub" ]
-  , H2 "GPG Key"
+  , H2 [] "GPG Key"
   , P [] [ Text "For sending me encrypted email, files etc." ]
   , Pre [Classes [Gibberish]] """
 -----BEGIN PGP PUBLIC KEY BLOCK-----

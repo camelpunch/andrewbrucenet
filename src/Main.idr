@@ -29,7 +29,7 @@ assemblePage page allPages =
     ]
   , Body $
     [ Div [Classes [Container]]
-      ( [ H1 $ title page
+      ( [ H1 [] $ title page
         , Ul [Classes [Menu, NoPrint]] (map menuItem allPages)
         ] ++ content page ++
         [ P [Classes [NoPrint]] [ A [] [Href "https://github.com/camelpunch/andrewbrucenet"] "Source" ]
