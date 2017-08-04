@@ -20,16 +20,6 @@ interface Show c => HtmlClass c
 public export
 Show a => HtmlClass a where
 
-data NoClass
-
-export
-noClass : List NoClass
-noClass = []
-
-export
-Show NoClass where
-  show _ = ""
-  
 public export
 data AttributeContext = AttrInLink | AttrGeneral
 
