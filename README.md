@@ -7,7 +7,7 @@ The core website is generated from [Idris](https://www.idris-lang.org/) source c
 ## Dependencies
 
 - Idris. [Installation instructions](http://docs.idris-lang.org/en/latest/tutorial/starting.html)
-- GNU Make. Available in most distros and OSX (warning: OSX ships with the older 3.x.x version), but probably not Windows.
+- Make.
 
 ## Building
 
