@@ -1,31 +1,22 @@
-pages := index.html cv/index.html contact/index.html
-objects := Site.idr Main.idr CV.idr Contact.idr
-dirs := cv contact
+.POSIX:
+.SUFFIXES:
 
-vpath generator := bin
-vpath %.idr := src
-vpath % := public
-
-default: $(pages)
-
-$(pages): generator $(dirs) $(objects)
-	bin/generator $(subst index.html,index,$(subst /index.html,,$@)) > public/$@
-
+all: public/index.html public/cv/index.html public/contact/index.html
 clean:
-	rm -rf bin/ $(addprefix public/,$(pages)) src/*.ibc
-
-generator: bin
+	rm -rf bin/ public/index.html public/cv public/contact src/*.ibc
+public/index.html: bin/generator
+	bin/generator index > $@
+public/cv/index.html: bin/generator public/cv
+	bin/generator cv > $@
+public/contact/index.html: bin/generator public/contact
+	bin/generator contact > $@
+bin/generator: bin
 	idris \
 	--sourcepath src \
 	--idrispath src \
-	--output bin/$@ \
+	--output $@ \
 	src/Main.idr
-
-$(dirs): public
-	-mkdir public/$@
-
-bin public:
+bin public/cv public/contact:
 	-mkdir $@
-
-serve: $(pages)
+serve: all
 	cd public && python -m SimpleHTTPServer
