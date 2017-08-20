@@ -1,11 +1,11 @@
-module Home
+module Index
 
 import Site
 import Classes
 
 export
-home : Page
-home =
+index : Page
+index =
   MkPage "/" "index" "Home" "A software person in London"
   [ P
     []

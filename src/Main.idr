@@ -1,7 +1,7 @@
 module Main
 
 import Site
-import Home
+import Index
 import CV
 import Contact
 import Blog
@@ -9,7 +9,7 @@ import Classes
 
 menu : Vect 4 Page
 menu =
-  [ home
+  [ index
   , cv
   , contact
   , blog
