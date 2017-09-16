@@ -1,13 +1,20 @@
 .POSIX:
 .SUFFIXES:
 
-all: public/index.html public/cv/index.html public/contact/index.html
+all: public/index.html public/contact/index.html public/cv.pdf
 clean:
-	rm -rf bin/ public/index.html public/cv public/contact src/*.ibc
+	rm -rf \
+		bin/generator \
+		public/index.html \
+		public/cv* \
+		public/contact \
+		src/*.ibc
 public/index.html: bin/generator
 	bin/generator index > $@
 public/cv/index.html: bin/generator public/cv
 	bin/generator cv > $@
+public/cv.pdf: public/cv/index.html
+	bin/generate-cv-pdf $@
 public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
 bin/generator: bin

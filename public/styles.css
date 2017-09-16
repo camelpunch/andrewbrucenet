@@ -9,11 +9,12 @@
 }
 @media print {
     .container {
-	margin: 0 1em;
-	max-width: none;
+        font-size: 80%;
+        margin: 0 1em;
+        max-width: 50em;
     }
     .noprint {
-	display: none;
+        display: none;
     }
 }
 .menu-item {
