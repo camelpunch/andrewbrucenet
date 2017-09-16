@@ -2,12 +2,14 @@ module CV
 
 import Site
 import CVGenerator
+import Classes
 
 export
 cv : Page
 cv =
   MkPage "/cv/" "cv" "CV" "Andrew Bruce"
-  [ P [] [ Text "me@andrewbruce.net / +447864303876"]
+  [ P [] [ Text "me@andrewbruce.net / +447864303876" ]
+  , P [ Classes [NoPrint] ] [ A [] [ Href "/cv.pdf" ] "PDF version" ]
   , CVGenerator.cv $ MkDocument
     [ MkPosition
       "Senior Software Engineer"
