@@ -16,11 +16,13 @@ cv =
       (From (January 2012) Present)
       """TDD, pairing and mentoring. Remote and local. Variety of team sizes and types. Interviewing candidates at all stages.
 
-Currently: Site Reliability Engineering. Deploying, operating and monitoring Pivotal Cloud Foundry on Google Cloud Platform.
+Currently: On Demand Services for Cloud Foundry.
 
-Previously: RabbitMQ core team, Pivotal Web Services, CloudFoundry CLI, docs tooling, CF services. Consulting large clients and startups. Leading small and large teams.
+Previously: Cloud Operations, RabbitMQ core team, Pivotal Web Services, CloudFoundry CLI, docs tooling, CF services.
 
-Languages in production: Ruby, JavaScript, Go, Objective-C, Swift, Erlang, Elixir.
+Pivotal Labs 2012-2014: Consulting large clients and startups. Leading small and large teams.
+
+Languages in production: Ruby, JavaScript, Go, Objective-C, Swift, Erlang.
 Languages for prototypes: Clojure, Haskell.
 
 Ran weekly XP discussion group for SF Bay Area engineers for one year."""
@@ -30,9 +32,7 @@ Ran weekly XP discussion group for SF Bay Area engineers for one year."""
       "Superhug"
       "Brighton"
       (From (February 2010) (To $ December 2011))
-      """A Rails-based e-commerce site (offline).
-
-Full-stack devops, from CSS to Chef. Blue-green deploys using AWS ELB."""
+      """A Rails-based e-commerce site (offline). Full-stack devops, from CSS to Chef. Blue-green deploys using AWS ELB."""
 
     , MkPosition
       "Software Engineer (contract)"
