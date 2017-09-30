@@ -10,7 +10,7 @@ index =
   [ P
     []
     [ Text "Here is my face" ]
-  , Img  "http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/pivot-andrew-bruce.jpg"
+  , Img  "https://pbs.twimg.com/profile_images/422231524897878016/u4fu2WH-_400x400.jpeg"
   , H2 [] "Things people usually pay me for"
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
@@ -36,6 +36,6 @@ index =
     []
     [ Text "I'm employed as a software engineer for "
     , A    [] [Href "https://pivotal.io/"] "Pivotal"
-    , Text ", currently on the CloudOps team."
+    , Text ", currently on the Services Enablement team."
     ]
   ]
