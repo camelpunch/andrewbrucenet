@@ -27,3 +27,9 @@ bin public/cv public/contact:
 	-mkdir $@
 serve: all
 	cd public && python -m SimpleHTTPServer
+deploy: all
+	rsync \
+		--recursive \
+		--delete \
+		public/ \
+		nim:/var/www/www.andrewbruce.net/
