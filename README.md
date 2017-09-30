@@ -21,10 +21,6 @@ make
 make clean serve
 ```
 
-## Deploying
-
-It is deployed to Cloud Foundry. `cf push` should be all you need to push it elsewhere.
-
 ## License
 
 Code is under [GPL v3](LICENSE).
