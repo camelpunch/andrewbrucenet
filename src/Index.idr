@@ -15,27 +15,27 @@ index =
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
     , Li [] [ Text "Pair programming and mentoring" ]
-    , Li [] [ Text "Complaining about what an Agile/XP team is(n't) doing" ]
-    , Li [] [ Text "Working on CloudFoundry" ]
+    , Li [] [ Text "Complaining about things" ]
+    , Li [] [ Text "Working on Cloud Foundry" ]
     , Li [] [ Text "Ruby" ]
     , Li [] [ Text "JavaScript" ]
     , Li [] [ Text "Objective-C" ]
     , Li [] [ Text "Swift" ]
     , Li [] [ Text "Go" ]
     ]
-  , H2 [] "Things I wish people would pay me for"
+  , H2 [] "Things I wish people would pay me for, but they probably shouldn't."
   , Ul []
     [ Li [] [ Text "Idris" ]
     , Li [] [ Text "Haskell" ]
     , Li [] [ Text "Elm" ]
     , Li [] [ Text "Clojure / ClojureScript" ]
-    , Li [] [ Text "Teaching them anything I know from the comfort of my home" ]
     ]
   , H2 [] "Current role"
   , P
     []
-    [ Text "I'm employed as a software engineer for "
-    , A    [] [Href "https://pivotal.io/"] "Pivotal"
-    , Text ", currently on the Services Enablement team."
+    [ Text "I do consultancy through "
+    , A    [] [Href "http://www.code.supply/"] "Code Supply"
+    , Text ", currently at the "
+    , A    [] [Href "https://gds.blog.gov.uk/"] "UK Government Digital Service"
     ]
   ]
