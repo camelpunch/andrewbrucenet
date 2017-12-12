@@ -12,10 +12,21 @@ cv =
   , P [ Classes [NoPrint] ] [ A [] [ Href "/cv.pdf" ] "PDF version" ]
   , CVGenerator.cv $ MkDocument
     [ MkPosition
+      "WebOps Engineer"
+      "Government Digital Services"
+      "London"
+     (From (October 2012) Present)
+     """Developing and operating the UK Government Platform as a Service, based on Cloud Foundry.
+
+Developing apps, service brokers, scripts and monitoring in Go, Ruby and BASH.
+
+TDD, pairing.
+     """
+    , MkPosition
       "Senior Software Engineer"
       "Pivotal"
       "London / San Francisco"
-      (From (January 2012) Present)
+      (From (January 2012) (To $ October 2017))
       """TDD, pairing and mentoring. Remote and local. Variety of team sizes and types. Interviewing candidates at all stages.
 
 Currently: On Demand Services for Cloud Foundry.
