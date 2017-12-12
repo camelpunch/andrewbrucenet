@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+
+cd public
+python -m SimpleHTTPServer&
+pid=$!
+cd -
+
+wkhtmltopdf http://localhost:8000/cv/ public/cv.pdf
+
+kill $pid

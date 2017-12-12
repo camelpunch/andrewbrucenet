@@ -11,7 +11,7 @@ clean:
 		src/*.ibc
 public/index.html: bin/generator
 	bin/generator index > $@
-public/cv/index.html: bin/generator public/cv
+public/cv/index.html: bin/generator public/cv src/CV.idr
 	bin/generator cv > $@
 public/cv.pdf: public/cv/index.html
 	bin/generate-cv-pdf $@
