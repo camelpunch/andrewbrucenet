@@ -11,13 +11,13 @@ clean:
 		src/*.ibc
 public/index.html: bin/generator
 	bin/generator index > $@
-public/cv/index.html: bin/generator public/cv src/CV.idr
+public/cv/index.html: bin/generator public/cv
 	bin/generator cv > $@
 public/cv.pdf: public/cv/index.html
 	bin/generate-cv-pdf $@
 public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
-bin/generator: bin
+bin/generator: bin src/*.idr
 	idris \
 	--sourcepath src \
 	--idrispath src \
