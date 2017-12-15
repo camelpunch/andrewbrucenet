@@ -15,7 +15,7 @@ cv =
       "WebOps Engineer"
       "Government Digital Services"
       "London"
-     (From (October 2012) Present)
+     (From (October 2017) Present)
      """Developing and operating the UK Government Platform as a Service, based on Cloud Foundry.
 
 Developing apps, service brokers, scripts and monitoring in Go, Ruby and BASH.
