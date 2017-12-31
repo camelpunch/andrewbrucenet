@@ -32,4 +32,4 @@ deploy: all
 		--recursive \
 		--delete \
 		public/ \
-		nim:/var/www/www.andrewbruce.net/
+		web:/var/www/www.andrewbruce.net/
