@@ -15,7 +15,7 @@ contact =
          , A [] [ Href "/key.asc" ] "public key"
          , Text ":"
          ]
-  , P [] [ Code [] "curl http://www.andrewbruce.net/key.asc | gpg --import" ]
+  , P [] [ Code [] "curl https://www.andrewbruce.net/key.asc | gpg --import" ]
   , P [] [ Text "Ensure it wasn't tampered with:" ]
   , P [] [ Code [] "gpg --fingerprint me@andrewbruce.net" ]
   , P [] [ Text "The output should include the fingerprint I publish on e.g. "
