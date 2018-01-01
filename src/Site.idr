@@ -40,6 +40,7 @@ data Element : ElementContext -> Type where
   P : List (Attribute AttrGeneral) -> List (Element General) -> Element General
   Div : List (Attribute AttrGeneral) -> List (Element General) -> Element General
   Pre : List (Attribute AttrGeneral) -> String -> Element General
+  Code : List (Attribute AttrGeneral) -> String -> Element General
   Text : String -> Element General
   Img : String -> Element General
   H1 : List (Attribute AttrGeneral) -> String -> Element General
@@ -107,6 +108,7 @@ mutual
     show (P attrs els) = tag "p" (attributify attrs) $ Just (showEls els)
     show (Div attrs els) = tag "div" (attributify attrs) $ Just (showEls els)
     show (Pre attrs str) = tag "pre" (attributify attrs) $ Just str
+    show (Code attrs str) = tag "code" (attributify attrs) $ Just str
     show (Text str) = str
     show (Img src) = tag "img" [ ("src", src) ] Nothing
     show (H1 attrs str) = tag "h1" (attributify attrs) $ Just str
