@@ -4,15 +4,13 @@ import Site
 import Index
 import CV
 import Contact
-import Blog
 import Classes
 
-menu : Vect 4 Page
+menu : Vect 3 Page
 menu =
   [ index
   , cv
   , contact
-  , blog
   ]
 
 menuItem : Page -> Element InList
