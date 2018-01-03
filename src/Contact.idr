@@ -8,7 +8,11 @@ contact : Page
 contact =
   MkPage "/contact/" "contact" "Contact" "Contact"
   [ H2 [] "Methods"
-  , H3 [] "Encrypted"
+  , H3 [] "Encrypted (easy)"
+  , P [] [ A [] [ Href "/encrypt/" ] "Create an encrypted message"
+         , Text ", then send it to me however you like. Only I will be able to read it."
+         ]
+  , H3 [] "Encrypted (advanced)"
   , P [] [ Text "Install "
          , A [] [ Href "https://gnupg.org/" ] "gnupg"
          , Text ", then import my "
