@@ -20,11 +20,11 @@ public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
 bin/generator: bin src/*.idr vendor/site/Site.ibc
 	idris \
-	--idrispath vendor/site \
-	--sourcepath src \
-	--idrispath src \
-	--output $@ \
-	src/Main.idr
+		--idrispath vendor/site \
+		--sourcepath src \
+		--idrispath src \
+		--output $@ \
+		src/Main.idr
 vendor/site/Site.ibc:
 	cd vendor/site && idris --build site.ipkg
 bin public/cv public/contact:
