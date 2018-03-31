@@ -8,7 +8,8 @@ clean:
 		public/index.html \
 		public/cv* \
 		public/contact \
-		src/*.ibc
+		src/*.ibc \
+		vendor/site/*.ibc
 public/index.html: bin/generator
 	bin/generator index > $@
 public/cv/index.html: bin/generator public/cv
@@ -17,12 +18,15 @@ public/cv.pdf: public/cv/index.html
 	bin/generate-cv-pdf $@
 public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
-bin/generator: bin src/*.idr
+bin/generator: bin src/*.idr vendor/site/Site.ibc
 	idris \
+	--idrispath vendor/site \
 	--sourcepath src \
 	--idrispath src \
 	--output $@ \
 	src/Main.idr
+vendor/site/Site.ibc:
+	cd vendor/site && idris --build site.ipkg
 bin public/cv public/contact:
 	-mkdir $@
 serve: all
