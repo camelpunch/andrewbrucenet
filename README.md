@@ -12,6 +12,7 @@ The core website is generated from [Idris](https://www.idris-lang.org/) source c
 ## Building
 
 ```
+bundle install --binstubs # install wkhtmltopdf
 make
 ```
 

@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    wkhtmltopdf (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  wkhtmltopdf
+
+BUNDLED WITH
+   1.16.1

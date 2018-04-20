@@ -2,11 +2,13 @@
 
 set -eu
 
+cwd=$(dirname "$0")
+
 cd public
 python -m SimpleHTTPServer&
 pid=$!
 cd -
 
-wkhtmltopdf http://localhost:8000/cv/ public/cv.pdf
+$cwd/wkhtmltopdf http://localhost:8000/cv/ public/cv.pdf
 
 kill $pid

@@ -2,3 +2,6 @@
 *~
 bin/generator
 public
+.bundle
+bin/wkhtmltopdf
+bin/bundle
