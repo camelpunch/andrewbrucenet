@@ -11,7 +11,7 @@ index =
     []
     [ Text "Here is my face" ]
   , Img  "https://pbs.twimg.com/profile_images/422231524897878016/u4fu2WH-_400x400.jpeg"
-  , H2 [] "Things people usually pay me for"
+  , H2 [] "Things people usually pay me for."
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
     , Li [] [ Text "Pair programming and mentoring" ]
@@ -35,7 +35,5 @@ index =
     []
     [ Text "I do consultancy through "
     , A    [] [Href "http://www.code.supply/"] "Code Supply"
-    , Text ", currently at the "
-    , A    [] [Href "https://gds.blog.gov.uk/"] "UK Government Digital Service"
     ]
   ]
