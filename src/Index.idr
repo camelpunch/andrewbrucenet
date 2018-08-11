@@ -6,7 +6,7 @@ import Classes
 export
 index : Page
 index =
-  MkPage "/" "index" "Home" "A software person in London"
+  MkPage "/" "index" "Home" "A software person"
   [ P
     []
     [ Text "Here is my face" ]
@@ -16,7 +16,7 @@ index =
     [ Li [] [ Text "Test Driven Development (TDD)" ]
     , Li [] [ Text "Pair programming and mentoring" ]
     , Li [] [ Text "Complaining about things" ]
-    , Li [] [ Text "Working on Cloud Foundry" ]
+    , Li [] [ Text "DevOpsy things like Cloud Foundry and Kubernetes"]
     , Li [] [ Text "Ruby" ]
     , Li [] [ Text "JavaScript" ]
     , Li [] [ Text "Objective-C" ]
