@@ -38,7 +38,7 @@ data ToDate = To Date | Present
 
 Show ToDate where
   show (To d) = show d
-  show Present = "Present"
+  show Present = "present"
 
 public export
 data DateRange = From Date ToDate
