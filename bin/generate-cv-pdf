@@ -9,6 +9,8 @@ python -m SimpleHTTPServer&
 pid=$!
 cd -
 
-$cwd/wkhtmltopdf http://localhost:8000/cv/ public/cv.pdf
+$cwd/wkhtmltopdf \
+    --print-media-type \
+    http://localhost:8000/cv/ public/cv.pdf
 
 kill $pid
