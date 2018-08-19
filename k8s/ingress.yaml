@@ -5,8 +5,9 @@ metadata:
   name: andrewbruce-net
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-regex: ^https?://andrewbruce.net/(.*)
+    traefik.ingress.kubernetes.io/redirect-regex: ^https?://(?:www.)?andrewbruce.net/(.*)
     traefik.ingress.kubernetes.io/redirect-replacement: https://www.andrewbruce.net/$1
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
 spec:
   rules:
   - host: www.andrewbruce.net
