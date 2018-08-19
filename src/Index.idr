@@ -34,6 +34,6 @@ index =
   , P
     []
     [ Text "I do consultancy through "
-    , A    [] [Href "http://www.code.supply/"] "Code Supply"
+    , A    [] [Href "https://code.supply/"] "Code Supply"
     ]
   ]
