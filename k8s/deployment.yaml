@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: andrewbruce-net
-        image: eu.gcr.io/code-supply/andrewbruce-net:${VERSION}
+        image: $IMAGE
         ports:
         - name: http
           containerPort: 80

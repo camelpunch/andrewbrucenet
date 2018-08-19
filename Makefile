@@ -31,13 +31,16 @@ bin public/cv public/contact:
 	-mkdir $@
 serve: all
 	cd public && python -m SimpleHTTPServer
-VERSION:
-	git rev-parse --short HEAD > $@
-build: all
-	docker build . -t eu.gcr.io/code-supply/andrewbruce-net:$$(cat VERSION)
+
+.PHONY: IMAGE
+IMAGE: all
+	[ "x$$(git status --porcelain)" = x ]
+	echo eu.gcr.io/code-supply/andrewbruce-net:$$(git rev-parse --short HEAD) > $@
+build: all IMAGE
+	docker build . -t $$(cat IMAGE)
 push: build
-	docker push eu.gcr.io/code-supply/andrewbruce-net
-rendered_k8s_manifests.yaml: VERSION k8s/deployment.yaml k8s/service.yaml k8s/ingress.yaml
-	cat k8s/*.yaml | VERSION=$$(cat VERSION) envsubst > $@
+	docker push $$(cat IMAGE)
+rendered_k8s_manifests.yaml: IMAGE k8s/deployment.yaml k8s/service.yaml k8s/ingress.yaml
+	cat k8s/*.yaml | IMAGE=$$(cat IMAGE) envsubst > $@
 deploy: rendered_k8s_manifests.yaml
 	kubectl --context=code-supply-production apply -f $<
