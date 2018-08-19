@@ -5,3 +5,5 @@ public
 .bundle
 bin/wkhtmltopdf
 bin/bundle
+VERSION
+rendered_k8s_manifests.yaml

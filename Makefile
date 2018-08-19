@@ -31,9 +31,13 @@ bin public/cv public/contact:
 	-mkdir $@
 serve: all
 	cd public && python -m SimpleHTTPServer
-deploy: all
-	rsync \
-		--recursive \
-		--delete \
-		public/ \
-		web:/var/www/www.andrewbruce.net/
+VERSION:
+	git rev-parse --short HEAD > $@
+build: all
+	docker build . -t eu.gcr.io/code-supply/andrewbruce-net:$$(cat VERSION)
+push: build
+	docker push eu.gcr.io/code-supply/andrewbruce-net
+rendered_k8s_manifests.yaml: VERSION k8s/deployment.yaml k8s/service.yaml k8s/ingress.yaml
+	cat k8s/*.yaml | VERSION=$$(cat VERSION) envsubst > $@
+deploy: rendered_k8s_manifests.yaml
+	kubectl --context=code-supply-production apply -f $<
