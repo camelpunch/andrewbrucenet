@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: andrewbruce-net
+  labels:
+    app: andrewbruce-net
+spec:
+  selector:
+    matchLabels:
+      app: andrewbruce-net
+  template:
+    metadata:
+      labels:
+        app: andrewbruce-net
+    spec:
+      containers:
+      - name: andrewbruce-net
+        image: $IMAGE
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
