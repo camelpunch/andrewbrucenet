@@ -18,15 +18,15 @@ public/cv.pdf: public/cv/index.html
 	bin/generate-cv-pdf $@
 public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
-bin/generator: bin src/*.idr vendor/site/Site.ibc
+bin/generator: bin src/*.idr
+	cd vendor/site && idris \
+		--install site.ipkg
 	idris \
-		--idrispath vendor/site \
+		--package site \
 		--sourcepath src \
 		--idrispath src \
 		--output $@ \
 		src/Main.idr
-vendor/site/Site.ibc:
-	cd vendor/site && idris --build site.ipkg
 bin public/cv public/contact:
 	-mkdir $@
 serve: all

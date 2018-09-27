@@ -38,3 +38,7 @@ assemblePage page allPages =
 
 main : IO ()
 main = getArgs >>= generate assemblePage menu
+
+-- Local Variables:
+-- idris-load-packages: ("site")
+-- End:
