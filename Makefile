@@ -18,15 +18,21 @@ public/cv.pdf: public/cv/index.html
 	bin/generate-cv-pdf $@
 public/contact/index.html: bin/generator public/contact
 	bin/generator contact > $@
-bin/generator: bin src/*.idr
-	cd vendor/site && idris \
-		--install site.ipkg
+bin/server: bin src/*.idr packages
 	idris \
+		--codegen node \
 		--package site \
+		--package webserver \
 		--sourcepath src \
 		--idrispath src \
 		--output $@ \
 		src/Main.idr
+.PHONY: packages
+packages:
+	cd vendor/site && idris \
+		--install site.ipkg
+	cd vendor/idris-web-server && idris \
+		--install webserver.ipkg
 bin public/cv public/contact:
 	-mkdir $@
 serve: all

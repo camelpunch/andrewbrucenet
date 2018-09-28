@@ -1,5 +1,7 @@
 module Main
 
+import WebServer
+import WebServer.Routes
 import Site
 import Index
 import CV
@@ -36,9 +38,26 @@ assemblePage page allPages =
     ]
   ]
 
-main : IO ()
-main = getArgs >>= generate assemblePage menu
+notFound : Response
+notFound = MkResponse 404 "Not Found"
+
+routes : Routes
+routes =
+  [ get "/" $ \req =>
+    MkResponse 200 $
+    html (assemblePage index menu)
+  ]
+
+handler : Routes -> Request -> Response
+handler routes req = fromMaybe notFound (handle req routes)
+
+main : JS_IO ()
+main = do
+  putStrLn' "Server starting"
+  startServer 8080
+              (putStrLn' "Serving on http://0.0.0.0:8080")
+              (handler routes)
 
 -- Local Variables:
--- idris-load-packages: ("site")
+-- idris-load-packages: ("webserver" "site")
 -- End:

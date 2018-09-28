@@ -1,6 +1,6 @@
 *.ibc
 *~
-bin/generator
+bin/server
 public
 .bundle
 bin/wkhtmltopdf
