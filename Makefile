@@ -29,10 +29,12 @@ bin/server: bin src/*.idr packages
 		src/Main.idr
 .PHONY: packages
 packages:
-	cd vendor/site && idris \
-		--install site.ipkg
-	cd vendor/idris-web-server && idris \
-		--install webserver.ipkg
+	idris --listlibs | grep -q site \
+	|| (cd vendor/site && idris \
+		--install site.ipkg)
+	idris --listlibs | grep -q webserver \
+	|| (cd vendor/idris-web-server && idris \
+		--install webserver.ipkg)
 bin public/cv public/contact:
 	-mkdir $@
 serve: all
