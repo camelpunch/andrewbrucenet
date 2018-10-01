@@ -16,10 +16,10 @@ bundle install --binstubs # install wkhtmltopdf
 make
 ```
 
-## Viewing locally (requires Python)
+## Viewing locally
 
 ```
-make clean serve
+bin/server
 ```
 
 ## License
