@@ -1,7 +1,10 @@
 .POSIX:
 .SUFFIXES:
 
+public/cv.pdf: bin/server
+	bin/generate-cv-pdf $@
 bin/server: bin src/*.idr .packages
+	touch public/cv.pdf
 	idris \
 		--codegen node \
 		--package site \

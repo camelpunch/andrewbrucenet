@@ -81,6 +81,7 @@ main = do
     (handler . static)
     [ "/"                       : index
     , "/cv/"                    : cv
+    , "/cv.pdf"                 ! "public/cv.pdf"
     , "/contact/"               : contact
     , "/encrypt/"               ! "public/encrypt/index.html"
     , "/jquery-3.2.1.min.js"    ! "public/jquery-3.2.1.min.js"
