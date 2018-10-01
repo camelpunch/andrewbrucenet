@@ -15,7 +15,6 @@ index =
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
     , Li [] [ Text "Pair programming and mentoring" ]
-    , Li [] [ Text "Complaining about things" ]
     , Li [] [ Text "DevOpsy things like Cloud Foundry and Kubernetes"]
     , Li [] [ Text "Ruby" ]
     , Li [] [ Text "JavaScript" ]
