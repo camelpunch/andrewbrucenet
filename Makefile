@@ -1,24 +1,7 @@
 .POSIX:
 .SUFFIXES:
 
-all: public/index.html public/contact/index.html public/cv.pdf
-clean:
-	rm -rf \
-		bin/generator \
-		public/index.html \
-		public/cv* \
-		public/contact \
-		src/*.ibc \
-		vendor/site/*.ibc
-public/index.html: bin/generator
-	bin/generator index > $@
-public/cv/index.html: bin/generator public/cv
-	bin/generator cv > $@
-public/cv.pdf: public/cv/index.html
-	bin/generate-cv-pdf $@
-public/contact/index.html: bin/generator public/contact
-	bin/generator contact > $@
-bin/server: bin src/*.idr packages
+bin/server: bin src/*.idr .packages
 	idris \
 		--codegen node \
 		--package site \
@@ -27,24 +10,20 @@ bin/server: bin src/*.idr packages
 		--idrispath src \
 		--output $@ \
 		src/Main.idr
-.PHONY: packages
-packages:
-	idris --listlibs | grep -q site \
-	|| (cd vendor/site && idris \
-		--install site.ipkg)
-	idris --listlibs | grep -q webserver \
-	|| (cd vendor/idris-web-server && idris \
-		--install webserver.ipkg)
-bin public/cv public/contact:
-	-mkdir $@
-serve: all
-	cd public && python -m SimpleHTTPServer
+clean:
+	rm -rf \
+		bin/server \
+		src/*.ibc
+.packages: vendor
+	cd vendor/site && idris --install site.ipkg
+	cd vendor/idris-web-server && idris --install webserver.ipkg
+	touch .packages
 
 .PHONY: IMAGE
-IMAGE: all
+IMAGE: bin/server
 	[ "x$$(git status --porcelain)" = x ]
 	echo eu.gcr.io/code-supply/andrewbruce-net:$$(git rev-parse --short HEAD) > $@
-build: all IMAGE
+build: bin/server IMAGE
 	docker build . -t $$(cat IMAGE)
 push: build
 	docker push $$(cat IMAGE)
