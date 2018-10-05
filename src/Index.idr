@@ -10,7 +10,9 @@ index =
   [ P
     []
     [ Text "Here is my face" ]
-  , Img  "https://pbs.twimg.com/profile_images/422231524897878016/u4fu2WH-_400x400.jpeg"
+  , Img [ Alt "Andrew's face"
+        , Src "https://pbs.twimg.com/profile_images/422231524897878016/u4fu2WH-_400x400.jpeg"
+        ]
   , H2 [] "Things people usually pay me for."
   , Ul []
     [ Li [] [ Text "Test Driven Development (TDD)" ]
@@ -36,3 +38,7 @@ index =
     , A    [] [Href "https://code.supply/"] "Code Supply"
     ]
   ]
+
+-- Local Variables:
+-- idris-load-packages: ("site")
+-- End:
