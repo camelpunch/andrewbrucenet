@@ -2,36 +2,39 @@ module MSite
 
 import Data.List
 
-showList : Show a => List a -> String
-showList = unwords . map show
+%default total
 
 namespace Elements
-  data Element = Ul | Li | Div
+  data Element
+    = Html
+    | Head
+    | Body
+    | Ul
+    | Li
+    | Div
   Show Element where
+    show Html = "html"
+    show Head = "head"
+    show Body = "body"
     show Ul = "ul"
     show Li = "li"
     show Div = "div"
 
 %name Elements.Element el
 
-namespace UlAttr
-  data UlAttr : Type where
-    ClassNames : List String -> UlAttr
-  Show UlAttr where
+namespace GenericAttr
+  data GenericAttr : Type where
+    ClassNames : List String -> GenericAttr
+  Show GenericAttr where
     show (ClassNames xs) = "class=\"" ++ unwords xs ++ "\""
 
-namespace LiAttr
-  data LiAttr : Type where
-    ClassNames : List String -> LiAttr
-  Show LiAttr where
-
-data DivAttr : Type where
-Show DivAttr where
-
 AttrsFor : Element -> Type
-AttrsFor Ul = UlAttr
-AttrsFor Li = LiAttr
-AttrsFor Div = DivAttr
+AttrsFor Html = GenericAttr
+AttrsFor Head = GenericAttr
+AttrsFor Body = GenericAttr
+AttrsFor Ul = GenericAttr
+AttrsFor Li = GenericAttr
+AttrsFor Div = GenericAttr
 
 namespace Contents
   mutual
@@ -43,46 +46,34 @@ namespace Contents
              Contents parent
       Closed : Element -> Contents parent
       Text : String -> Contents parent
-      (>>=) : Contents parent -> (Contents parent -> Contents parent) -> Contents parent
+      Empty : Contents parent
+      (>>=) : Contents parent -> (Element -> Contents parent) -> Contents parent
 
     allowedChildOf : Element -> List Element
-    allowedChildOf el =
-      case el of
-           Ul => [Li]
-           Li => [Div]
-           Div => [Ul, Li, Div]
-
+    allowedChildOf Html = [Head, Body]
+    allowedChildOf Head = []
+    allowedChildOf Body = [Ul]
+    allowedChildOf Ul = [Li]
+    allowedChildOf Li = [Div]
+    allowedChildOf Div = [Ul, Li, Div]
 %name Contents contents
 
-Show (Contents parent) where
-  show (Open Ul attrs contents) =
-    "<" ++ show Ul ++ " " ++ showList attrs ++ ">"
-    ++ show contents ++
-    "</" ++ show Ul ++ ">"
-  show (Open Li attrs contents) =
-    "<" ++ show Li ++ " " ++ showList attrs ++ ">"
-    ++ show contents ++
-    "</" ++ show Li ++ ">"
-  show (Open Div attrs contents) =
-    "<" ++ show Div ++ " " ++ showList attrs ++ ">"
-    ++ show contents ++
-    "</" ++ show Div ++ ">"
-  show (Closed el) =
-    "<" ++ show el ++ "/>"
-  show (Text s) = s
-  show (contents >>= f) =
-    show contents ++ show (f contents)
-
 syntax "class" "=" [classes] = ClassNames (words classes)
+syntax html [children] = Open Html [] children
+syntax head [children] = Open Head [] children
+syntax body [children] = Open Body [] children
 syntax ul [children] = Open Ul [] children
 syntax ul [attrs] ";" [children] = Open Ul attrs children
 syntax li [children] = Open Li [] children
 syntax li [attrs] ";" [children] = Open Li attrs children
 syntax li "." [classes] ";" [children] = Open Li [ClassNames (words classes)] children
 syntax ":" [s] = Text s
+syntax "." = Empty
 
-listy : Contents Div
-listy =
-  ul [class="baz bar"]; do
-    li : "foo"
-    li : "bar"
+listy : Contents Html
+listy = do
+  head : ""
+  body do
+    ul do
+      li .
+    ul .
