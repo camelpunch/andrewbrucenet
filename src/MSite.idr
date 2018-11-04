@@ -1,11 +1,14 @@
 module MSite
 
-import Data.List
+import public Control.Monad.Writer
+import public Control.Monad.Identity
+import public Data.List
 
 %default total
+%access public export
 
-namespace Elements
-  data Element
+namespace NodeNames
+  data NodeName
     = Html
     | Head
     | Title
@@ -14,7 +17,9 @@ namespace Elements
     | Div
     | Ul
     | Li
-  Show Element where
+  %name NodeName nodeName
+
+  Show NodeName where
     show Html = "html"
     show Head = "head"
     show Title = "title"
@@ -24,65 +29,154 @@ namespace Elements
     show Ul = "ul"
     show Li = "li"
 
-namespace GenericAttr
-  data GenericAttr : Type where
-    ClassNames : List String -> GenericAttr
-  Show GenericAttr where
-    show (ClassNames xs) = "class=\"" ++ unwords xs ++ "\""
+  Eq NodeName where
+    Html == Html = True
+    Head == Head = True
+    Title == Title = True
+    Link == Link = True
+    Body == Body = True
+    Div == Div = True
+    Ul == Ul = True
+    Li == Li = True
+    _ == _ = False
 
-AttrsFor : Element -> Type
-AttrsFor Html = GenericAttr
-AttrsFor Head = GenericAttr
-AttrsFor Title = GenericAttr
-AttrsFor Link = GenericAttr
-AttrsFor Body = GenericAttr
-AttrsFor Div = GenericAttr
-AttrsFor Ul = GenericAttr
-AttrsFor Li = GenericAttr
+URI : Type
+URI = String
 
-namespace Contents
+data Attribute : Type where
+  ClassNames : List String -> Attribute
+  Href : URI -> Attribute
+%name Attribute attr
+
+classNames : List String -> Attribute
+classNames = ClassNames
+
+Show Attribute where
+  show (ClassNames xs) = "class=\"" ++ unwords xs ++ "\""
+  show (Href uri) = show uri
+
+namespace Elements
   mutual
-    data Contents : (parent : Element) -> Type where
-      Open : (el : Element) ->
-             List (AttrsFor el) ->
-             (children : Contents el) ->
-             {auto prf : el `Elem` allowedChildOf parent} ->
-             Contents parent
-      Closed : Element -> Contents parent
-      Text : String -> Contents parent
-      Empty : Contents parent
-      (>>=) : Contents parent -> (Element -> Contents parent) -> Contents parent
+    data Element : (parent : NodeName) -> Type where
+      Generic : (el : NodeName) ->
+                (attrs : List Attribute) ->
+                (children : Element el) ->
+                {auto prf : el `HasParent` parent} ->
+                {auto prfAttrs : attrsPermitted el attrs = True} ->
+                Element parent
+      Head : List Attribute ->
+             (children : Element Head) ->
+             {auto prf : numTitles children = 1} ->
+             Element Html
+      Link : List Attribute ->
+             Element parent
+      Empty : Element parent
+      Text : String -> Element parent
+      Collection : (existing : Element parent) ->
+                   (new : Element parent) ->
+                   Element parent
 
-    allowedChildOf : Element -> List Element
-    allowedChildOf Html = [Head, Body]
-    allowedChildOf Head = [Title]
-    allowedChildOf Title = []
-    allowedChildOf Link = []
-    allowedChildOf Body = [Div, Ul]
-    allowedChildOf Div = [Ul, Li, Div]
-    allowedChildOf Ul = [Li]
-    allowedChildOf Li = [Div]
+    attrsPermitted : NodeName -> List Attribute -> Bool
+    attrsPermitted nodeName [] = True
+    attrsPermitted Link (Href :: attrs) = attrsPermitted Link attrs
+    attrsPermitted nodeName ((ClassNames _) :: attrs) = attrsPermitted nodeName attrs
+    attrsPermitted _ _ = False
 
-syntax "class" "=" [classes] = ClassNames (words classes)
-syntax html [children] = Open Html [] children
-syntax head [children] = Open Head [] children
-syntax title [s] = Open Title [] (Text s)
-syntax body [children] = Open Body [] children
-syntax div [children] = Open Div [] children
-syntax ul [children] = Open Ul [] children
-syntax ul [attrs] ";" [children] = Open Ul attrs children
-syntax li [children] = Open Li [] children
-syntax li [attrs] ";" [children] = Open Li attrs children
-syntax li "." [classes] ";" [children] = Open Li [ClassNames (words classes)] children
-syntax ":" [s] = Text s
-syntax "." = Empty
+    numTitles : Element Head -> Nat
+    numTitles (Generic Title xs children) = 1
+    numTitles (Collection existing new) = numTitles existing + numTitles new
+    numTitles _ = 0
 
-listy : Contents Html
-listy = do
-  head do
-    title "My Website"
-  body do
-    div do
-      ul do
-        li .
-      ul .
+    HasParent : (child : NodeName) -> (parent : NodeName) -> Type
+    HasParent child parent = child `Elem` childrenOf parent where
+      childrenOf : NodeName -> List NodeName
+      childrenOf Html = [Head, Body]
+      childrenOf Head = [Link, Title]
+      childrenOf Title = []
+      childrenOf Link = []
+      childrenOf Body = [Div, Ul]
+      childrenOf Div = [Ul, Li, Div]
+      childrenOf Ul = [Li]
+      childrenOf Li = [Div]
+
+  showAttrs : List Attribute -> String
+  showAttrs [] = ""
+  showAttrs xs = " " ++ unwords (map show xs)
+
+  openTag : NodeName -> List Attribute -> String
+  openTag name attrs = "<" ++ show name ++ showAttrs attrs ++ ">"
+
+  closeTag : NodeName -> String
+  closeTag name = "</" ++ show name ++ ">"
+
+  selfCloseTag : NodeName -> List Attribute -> String
+  selfCloseTag name attrs = "<" ++ show name ++ showAttrs attrs ++ "/>"
+
+  mutual
+    openCloseTag : NodeName -> List Attribute -> Element _ -> String
+    openCloseTag name attrs children =
+      openTag name attrs
+      ++ show children ++
+      closeTag name
+
+    Show (Element parent) where
+      show (Generic el attrs children) =
+        openCloseTag el attrs children
+      show (Head attrs children) =
+        openCloseTag Head attrs children
+      show (Link attrs) = selfCloseTag Link attrs
+      show Empty = ""
+      show (Text x) = x
+      show (Collection x y) = show x ++ show y
+
+  Semigroup (Element parent) where
+    (<+>) = Collection
+
+  Monoid (Element parent) where
+    neutral = Text ""
+
+Document : (parent : NodeName) -> Type
+Document parent = Writer (Element parent) ()
+
+fromDocument : Document parent -> Element parent
+fromDocument (WR (Id (_, contents))) = contents
+
+Show (Document parent) where
+  show x {parent} =
+    "<" ++ show parent ++ ">"
+    ++ show (fromDocument x) ++
+    "</" ++ show parent ++ ">"
+
+head : List Attribute ->
+       (children : Document Head) ->
+       {auto prf : numTitles (fromDocument children) = 1} ->
+       Document Html
+head attrs children = tell $ Head attrs (fromDocument children)
+
+title : (attrs : List Attribute) ->
+        String ->
+        {auto prf : attrsPermitted Title attrs = True} ->
+        Document Head
+title attrs text = tell $ Generic Title attrs (Text text)
+
+body : (attrs : List Attribute) ->
+       Document Body ->
+       {auto prf : attrsPermitted Body attrs = True} ->
+       Document Html
+body attrs children = tell $ Generic Body attrs (fromDocument children)
+
+div : (attrs : List Attribute) ->
+      Document Div ->
+      {auto prf : Div `HasParent` parent} ->
+      {auto attrsPrf : attrsPermitted Div attrs = True} ->
+      Document parent
+div attrs children = tell $ Generic Div attrs (fromDocument children)
+
+link : (attrs : List Attribute) ->
+       {auto prf : Link `HasParent` parent} ->
+       {auto attrsPrf : attrsPermitted Link attrs = True} ->
+       Document parent
+link attrs = tell $ Generic Link attrs Elements.Empty
+
+text : String -> Document a
+text = tell . Text
