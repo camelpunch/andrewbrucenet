@@ -29,17 +29,6 @@ namespace NodeNames
     show Ul = "ul"
     show Li = "li"
 
-  Eq NodeName where
-    Html == Html = True
-    Head == Head = True
-    Title == Title = True
-    Link == Link = True
-    Body == Body = True
-    Div == Div = True
-    Ul == Ul = True
-    Li == Li = True
-    _ == _ = False
-
 URI : Type
 URI = String
 
@@ -48,12 +37,9 @@ data Attribute : Type where
   Href : URI -> Attribute
 %name Attribute attr
 
-classNames : List String -> Attribute
-classNames = ClassNames
-
 Show Attribute where
   show (ClassNames xs) = "class=\"" ++ unwords xs ++ "\""
-  show (Href uri) = show uri
+  show (Href uri) = "href=\"" ++ uri ++ "\""
 
 namespace Elements
   mutual
@@ -62,19 +48,26 @@ namespace Elements
                 (attrs : List Attribute) ->
                 (children : Element el) ->
                 {auto prf : el `HasParent` parent} ->
-                {auto prfAttrs : attrsPermitted el attrs = True} ->
+                {auto prfAttrs : disallowedAttrs el attrs = []} ->
                 Element parent
       Head : List Attribute ->
              (children : Element Head) ->
              {auto prf : numTitles children = 1} ->
              Element Html
-      Link : List Attribute ->
-             Element parent
       Empty : Element parent
       Text : String -> Element parent
       Collection : (existing : Element parent) ->
                    (new : Element parent) ->
                    Element parent
+
+    disallowedAttrs : NodeName -> List Attribute -> List Attribute
+    disallowedAttrs nodeName xs = disallowed [] nodeName xs where
+      attrPermitted : NodeName -> Attribute -> Bool
+      attrPermitted Link (Href _) = True
+      attrPermitted _ (ClassNames _) = True
+      attrPermitted _ _ = False
+      disallowed : List Attribute -> NodeName -> List Attribute -> List Attribute
+      disallowed acc name attrs = filter (not . attrPermitted name) attrs
 
     attrsPermitted : NodeName -> List Attribute -> Bool
     attrsPermitted nodeName [] = True
@@ -106,25 +99,21 @@ namespace Elements
   openTag : NodeName -> List Attribute -> String
   openTag name attrs = "<" ++ show name ++ showAttrs attrs ++ ">"
 
-  closeTag : NodeName -> String
-  closeTag name = "</" ++ show name ++ ">"
-
   selfCloseTag : NodeName -> List Attribute -> String
   selfCloseTag name attrs = "<" ++ show name ++ showAttrs attrs ++ "/>"
+
+  closeTag : NodeName -> String
+  closeTag name = "</" ++ show name ++ ">"
 
   mutual
     openCloseTag : NodeName -> List Attribute -> Element _ -> String
     openCloseTag name attrs children =
-      openTag name attrs
-      ++ show children ++
-      closeTag name
+      openTag name attrs ++ show children ++ closeTag name
 
     Show (Element parent) where
-      show (Generic el attrs children) =
-        openCloseTag el attrs children
-      show (Head attrs children) =
-        openCloseTag Head attrs children
-      show (Link attrs) = selfCloseTag Link attrs
+      show (Generic el attrs Empty) = selfCloseTag el attrs
+      show (Generic el attrs children) = openCloseTag el attrs children
+      show (Head attrs children) = openCloseTag Head attrs children
       show Empty = ""
       show (Text x) = x
       show (Collection x y) = show x ++ show y
@@ -142,10 +131,7 @@ fromDocument : Document parent -> Element parent
 fromDocument (WR (Id (_, contents))) = contents
 
 Show (Document parent) where
-  show x {parent} =
-    "<" ++ show parent ++ ">"
-    ++ show (fromDocument x) ++
-    "</" ++ show parent ++ ">"
+  show children {parent} = openCloseTag parent [] (fromDocument children)
 
 head : List Attribute ->
        (children : Document Head) ->
@@ -155,28 +141,28 @@ head attrs children = tell $ Head attrs (fromDocument children)
 
 title : (attrs : List Attribute) ->
         String ->
-        {auto prf : attrsPermitted Title attrs = True} ->
+        {auto prf : disallowedAttrs Title attrs = []} ->
         Document Head
 title attrs text = tell $ Generic Title attrs (Text text)
 
 body : (attrs : List Attribute) ->
        Document Body ->
-       {auto prf : attrsPermitted Body attrs = True} ->
+       {auto prf : disallowedAttrs Body attrs = []} ->
        Document Html
 body attrs children = tell $ Generic Body attrs (fromDocument children)
 
 div : (attrs : List Attribute) ->
       Document Div ->
       {auto prf : Div `HasParent` parent} ->
-      {auto attrsPrf : attrsPermitted Div attrs = True} ->
+      {auto attrsPrf : disallowedAttrs Div attrs = []} ->
       Document parent
 div attrs children = tell $ Generic Div attrs (fromDocument children)
 
 link : (attrs : List Attribute) ->
        {auto prf : Link `HasParent` parent} ->
-       {auto attrsPrf : attrsPermitted Link attrs = True} ->
+       {auto attrsPrf : disallowedAttrs Link attrs = []} ->
        Document parent
 link attrs = tell $ Generic Link attrs Elements.Empty
 
-text : String -> Document a
+text : String -> Document parent
 text = tell . Text
