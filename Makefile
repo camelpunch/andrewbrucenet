@@ -7,6 +7,7 @@ bin/server: bin src/*.idr .packages
 	touch public/cv.pdf
 	idris \
 		--codegen node \
+		--package mrk \
 		--package site \
 		--package webserver \
 		--sourcepath src \
@@ -18,6 +19,7 @@ clean:
 		bin/server \
 		src/*.ibc
 .packages: vendor
+	cd vendor/mrk && idris --install mrk.ipkg
 	cd vendor/site && idris --install site.ipkg
 	cd vendor/idris-web-server && idris --install webserver.ipkg
 	touch .packages

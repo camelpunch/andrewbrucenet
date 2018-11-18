@@ -14,7 +14,7 @@ import Classes
 
 menu : Vect 3 Page
 menu =
-  [ index
+  [ indexSite
   , cv
   , contact
   ]
@@ -79,7 +79,7 @@ main = do
     8080
     (putStrLn' "Serving on http://0.0.0.0:8080") $
     (handler . static)
-    [ "/"                       : index
+    [ "/"                       : indexSite
     , "/cv/"                    : cv
     , "/cv.pdf"                 ! "public/cv.pdf"
     , "/contact/"               : contact
@@ -93,5 +93,5 @@ main = do
     ]
 
 -- Local Variables:
--- idris-load-packages: ("webserver" "site")
+-- idris-load-packages: ("webserver" "site" "mrk")
 -- End:

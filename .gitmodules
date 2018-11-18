@@ -4,3 +4,6 @@
 [submodule "vendor/idris-web-server"]
 	path = vendor/idris-web-server
 	url = https://github.com/camelpunch/idris-web-server
+[submodule "vendor/mrk"]
+	path = vendor/mrk
+	url = https://github.com/camelpunch/mrk
