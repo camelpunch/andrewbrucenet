@@ -42,7 +42,7 @@ index = do
           li "Objective-C"
           li "Swift"
           li "Go"
-        h2 "This I wish people would pay me for, but they probably shouldn't."
+        h2 "Things I wish people would pay me for, but they probably shouldn't."
         ul $ do
           li "Idris"
           li "Haskell"
