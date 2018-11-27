@@ -1,9 +1,10 @@
 module Main
 
+import Mrk
+import Site
 import WebServer
 import WebServer.Routes
 import WebServer.JS
-import Site
 
 import Index
 import CV
@@ -23,7 +24,7 @@ menuItem : Page -> Element InList
 menuItem page = Li [Classes [MenuItem]]
                    [A [Classes [NoHist]] [Href (path page)] (menuTitle page)]
 
-assemblePage : Vect (S n) Page -> Page -> Element Root
+assemblePage : Vect (S n) Page -> Page -> Site.Element Root
 assemblePage allPages page =
   Html $
   [ Head $
@@ -59,6 +60,10 @@ serveBody body req = MkResponse OK body (headers body (path req))
 generate : Page -> String
 generate = html . assemblePage menu
 
+namespace MrkGenerate
+  generate : Document Root -> String
+  generate = show
+
 static : List (String, String) -> Routes
 static ((path, body) :: xs) =
   MkRoute Get path End (serveBody body) :: static xs
@@ -79,7 +84,7 @@ main = do
     8080
     (putStrLn' "Serving on http://0.0.0.0:8080") $
     (handler . static)
-    [ "/"                       : indexSite
+    [ "/"                       : index
     , "/cv/"                    : cv
     , "/cv.pdf"                 ! "public/cv.pdf"
     , "/contact/"               : contact
