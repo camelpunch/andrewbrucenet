@@ -133,5 +133,5 @@ cv (MkDocument experience education) = do
       educationLis education
 
 -- Local Variables:
--- idris-load-packages: ("site" "mrk")
+-- idris-load-packages: ("mrk")
 -- End:
