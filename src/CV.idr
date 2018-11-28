@@ -1,16 +1,19 @@
 module CV
 
+import Mrk
 import Site
+
 import CVGenerator
 import Classes
+import Layout
 
 export
-cv : Page
-cv =
-  MkPage "/cv/" "cv" "CV" "Andrew Bruce"
-  [ P [] [ Text "me@andrewbruce.net / +447864303876" ]
-  , P [ Classes [NoPrint] ] [ A [] [ Href "/cv.pdf" ] "PDF version" ]
-  , CVGenerator.cv $ MkDocument
+cv : Document Root
+cv = page "Andrew Bruce: CV" "Andrew Bruce" $ do
+  p "me@andrewbruce.net / +447864303876"
+  p [ClassNames [NoPrint]] $ do
+    a (Just "/cv.pdf") "PDF version"
+  CVGenerator.cv $ MkDocument
     [ MkPosition
       "DevOps Consultant (contract)"
       "Boclips"
@@ -116,4 +119,12 @@ Promoted to Projects Team Leader December 2006."""
       (From (September 1995) (To $ July 2001))
       ""
     ]
-  ]
+
+export
+cvSite : Page
+cvSite =
+  MkPage "/cv/" "cv" "CV" "Andrew Bruce" neutral
+
+-- Local Variables:
+-- idris-load-packages: ("site" "mrk")
+-- End:

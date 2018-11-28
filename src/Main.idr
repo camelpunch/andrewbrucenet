@@ -16,7 +16,7 @@ import Classes
 menu : Vect 3 Page
 menu =
   [ indexSite
-  , cv
+  , cvSite
   , contact
   ]
 

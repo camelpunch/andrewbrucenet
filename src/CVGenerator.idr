@@ -2,7 +2,7 @@ module CVGenerator
 
 import Data.Vect
 
-import Site
+import Mrk
 
 public export
 data Date
@@ -75,49 +75,63 @@ record Document where
   experience : Vect (S n) Position
   education : Vect (S m) Course
 
-%name Document doc
+%name CVGenerator.Document doc
 
-strPara : String -> Element General
-strPara str = P [] [ Text $ str ]
+strPara : String -> Element Li
+strPara str = Generic P [] (Text str)
 
-showPara : Show a => a -> Element General
-showPara = strPara . show
+showPara : Show a => a -> Document Li
+showPara = tell . strPara . show
 
-toParas : String -> List (Element General)
-toParas text = map strPara $ filter (/= "") (lines text)
+toParas : String -> Document Li
+toParas text =
+  tell $ toParas' text where
+  toParas' : String -> Element Li
+  toParas' t =
+    foldl (\acc, elem =>
+      acc <+> strPara elem
+    ) neutral $
+    filter (/= "") (lines t)
 
 data CVClass
   = NoBullet
   | NoListIndent
 
-Show CVClass where
-  show NoBullet = "cv-item"
-  show NoListIndent = "cv-section"
+AttributeValue CVClass where
+  toAttr NoBullet = "cv-item"
+  toAttr NoListIndent = "cv-section"
 
-experienceLis : Vect (S n) Position -> Vect (S n) (Element InList)
-experienceLis (position :: []) =
-  [ Li [Classes [NoBullet]] $
-    [ H3 [] $ title position
-    , H4 [] $ company position ++ " (" ++ location position ++ ", " ++ show (period position) ++ ")"
-    ] ++ (toParas (description position))
-  ]
-experienceLis (x :: x' :: xs) = experienceLis [x] ++ experienceLis (x' :: xs)
+experienceLis : Vect (S n) Position -> Document Ul
+experienceLis (position :: []) = do
+  li [ClassNames [NoBullet]] $ do
+    h3 $ title position
+    h4 $ company position ++ " (" ++ location position ++ ", " ++ show (period position) ++ ")"
+    (toParas (description position))
+experienceLis (x :: x' :: xs) = do
+  experienceLis [x]
+  experienceLis (x' :: xs)
 
-educationLis : Vect (S n) Course -> Vect (S n) (Element InList)
+educationLis : Vect (S n) Course -> Document Ul
 educationLis (course :: []) =
-  [ Li [Classes [NoBullet]]
-    [ H3 [] $ school course
-    , H4 [] $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
-    , showPara $ period course
-    ]
-  ]
-educationLis (x :: x' :: xs) = educationLis [x] ++ educationLis (x' :: xs)
+  li [ClassNames [NoBullet]] $ do
+    h3 $ school course
+    h4 $ qualification course ++ ", " ++ field course ++ ", " ++ grade course
+    showPara $ period course
+educationLis (x :: x' :: xs) = do
+  educationLis [x]
+  educationLis (x' :: xs)
 
 export
-cv : Document -> Element General
-cv (MkDocument experience education) =
-  Div [] [ H2 [] "Experience"
-         , Ul [Classes [NoListIndent]] $ experienceLis experience
-         , H2 [] "Education"
-         , Ul [Classes [NoListIndent]] $ educationLis education
-         ]
+cv : Document -> Document Div
+cv (MkDocument experience education) = do
+  div $ do
+    h2 "Experience"
+    ul [ClassNames [NoListIndent]] $
+      experienceLis experience
+    h2 "Education"
+    ul [ClassNames [NoListIndent]] $
+      educationLis education
+
+-- Local Variables:
+-- idris-load-packages: ("site" "mrk")
+-- End:
