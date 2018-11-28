@@ -1,6 +1,3 @@
-[submodule "vendor/site"]
-	path = vendor/site
-	url = https://gitlab.com/code-supply/site
 [submodule "vendor/idris-web-server"]
 	path = vendor/idris-web-server
 	url = https://github.com/camelpunch/idris-web-server

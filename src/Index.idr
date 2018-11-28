@@ -1,7 +1,6 @@
 module Index
 
 import Mrk
-import Site
 
 import Classes
 import Layout
@@ -35,11 +34,6 @@ index = page "Andrew Bruce: A software person" "A software person" $ do
     text "I do consultancy through "
     a (Just "https://code.supply/") "Code Supply"
 
-export
-indexSite : Page
-indexSite =
-  MkPage "/" "index" "Home" neutral neutral
-
 -- Local Variables:
--- idris-load-packages: ("site" "mrk")
+-- idris-load-packages: ("mrk")
 -- End:

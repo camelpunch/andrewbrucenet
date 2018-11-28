@@ -1,7 +1,7 @@
 module CV
 
+import Data.Vect
 import Mrk
-import Site
 
 import CVGenerator
 import Classes
@@ -120,11 +120,6 @@ Promoted to Projects Team Leader December 2006."""
       ""
     ]
 
-export
-cvSite : Page
-cvSite =
-  MkPage "/cv/" "cv" "CV" "Andrew Bruce" neutral
-
 -- Local Variables:
--- idris-load-packages: ("site" "mrk")
+-- idris-load-packages: ("mrk")
 -- End:
