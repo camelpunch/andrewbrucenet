@@ -30,7 +30,7 @@ build: bin/server IMAGE
 	docker build . -t $$(cat IMAGE)
 push: build
 	docker push $$(cat IMAGE)
-rendered_k8s_manifests.yaml: IMAGE k8s/daemon-set.yaml k8s/service.yaml k8s/ingress.yaml
+rendered_k8s_manifests.yaml: IMAGE k8s/deployment.yaml k8s/service.yaml k8s/ingress.yaml
 	cat k8s/*.yaml | IMAGE=$$(cat IMAGE) envsubst > $@
 deploy: rendered_k8s_manifests.yaml
 	kubectl --context=code-supply-zonal-production apply -f $<

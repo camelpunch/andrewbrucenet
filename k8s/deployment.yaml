@@ -1,11 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: andrewbruce-net
   labels:
     app: andrewbruce-net
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: andrewbruce-net
