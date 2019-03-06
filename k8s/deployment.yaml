@@ -2,22 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: andrewbruce-net
+  name: &name andrewbruce-net-istio
+  namespace: production
   labels:
-    app: andrewbruce-net
+    app: *name
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: andrewbruce-net
+      app: *name
   template:
     metadata:
       labels:
-        app: andrewbruce-net
+        app: *name
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-      - name: andrewbruce-net
+      - name: *name
         image: $IMAGE
         ports:
         - name: http

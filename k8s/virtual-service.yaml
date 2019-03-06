@@ -1,0 +1,37 @@
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: andrewbruce-net
+  namespace: production
+spec:
+  hosts:
+  - www.andrewbruce.net
+  gateways:
+  - code-supply
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: andrewbruce-net-istio
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: andrewbruce-net-redirect
+  namespace: production
+spec:
+  hosts:
+  - andrewbruce.net
+  gateways:
+  - code-supply
+  http:
+  - match:
+    - uri:
+        prefix: /
+    redirect:
+      authority: www.andrewbruce.net
