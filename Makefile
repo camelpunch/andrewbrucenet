@@ -3,6 +3,12 @@
 
 public/cv.pdf: bin/server
 	bin/generate-cv-pdf $@
+public/key.asc:
+	gpg \
+		--export \
+		--armor \
+		F6F6E949990C4DD41E79D22C2D501B260861257F \
+		> $@
 bin/server: bin src/*.idr .packages
 	touch public/cv.pdf
 	idris \
