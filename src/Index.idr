@@ -24,6 +24,7 @@ index = page "Andrew Bruce: A software person" "A software person" $ do
     li "Test Driven Development (TDD)"
     li "Pair programming and mentoring"
     li "DevOpsy things like Cloud Foundry and Kubernetes"
+    li "Kotlin"
     li "Ruby"
     li "JavaScript"
     li "Objective-C"
