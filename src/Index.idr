@@ -13,6 +13,12 @@ index = page "Andrew Bruce: A software person" "A software person" $ do
   p "Here is my face."
   img "https://pbs.twimg.com/profile_images/422231524897878016/u4fu2WH-_400x400.jpeg"
       "I'm wearing silly glasses and a pink wig, in a wedding photo booth thingy."
+  h2 "Blog posts"
+  ul $ do
+    li $ do
+      a (Just "https://content.pivotal.io/authors/andrew-bruce") "Whilst at Pivotal"
+    li $ do
+      a (Just "https://medium.com/@andrewofbruce") "On Medium"
   h2 "Things people usually pay me for."
   ul $ do
     li "Test Driven Development (TDD)"
