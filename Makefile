@@ -39,4 +39,4 @@ push: build
 rendered_k8s_manifests.yaml: IMAGE k8s/deployment.yaml k8s/service.yaml k8s/virtual-service.yaml
 	cat k8s/*.yaml | IMAGE=$$(cat IMAGE) envsubst > $@
 deploy: rendered_k8s_manifests.yaml
-	kubectl --context=code-supply-zonal-production apply -f $<
+	kubectl --context=code-supply-production apply -f $<
